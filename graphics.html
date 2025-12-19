@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphics Gallery | Eva Nguyen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Gallery specific styles */
+        .gallery-section {
+            padding: var(--space-xxl) 0;
+            position: relative;
+            z-index: 1; /* Lower than nav */
+        }
+        
+        .gallery-hero {
+            text-align: center;
+            padding: var(--space-xxl) 0;
+        }
+        
+        .gallery-hero h1 {
+            font-size: 3rem;
+            margin-bottom: var(--space-sm);
+            background: var(--gradient-sunset);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gallery-hero .tagline {
+            font-family: var(--font-cursive);
+            font-size: 1.5rem;
+            color: var(--purple-dark);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .gallery-hero p {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: var(--font-size-md);
+            color: var(--text);
+            line-height: 1.8;
+        }
+        
+        /* UPDATED: Smaller category buttons */
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: var(--space-xs) var(--space-lg);
+            background: var(--white);
+            border: 2px solid var(--pink-medium);
+            color: var(--pink-dark);
+            border-radius: 20px;
+            font-family: var(--font-heading);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: var(--font-size-sm);
+        }
+        
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-dream);
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .tab-btn.active {
+            color: var(--white);
+            border-color: transparent;
+            box-shadow: var(--shadow-soft);
+            transform: translateY(-2px);
+        }
+        
+        .tab-btn.active::before {
+            opacity: 1;
+        }
+        
+        .tab-btn:hover:not(.active) {
+            color: var(--white);
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+        
+        .tab-btn:hover:not(.active)::before {
+            opacity: 1;
+        }
+        
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .gallery-item {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+            z-index: 1; /* Explicit z-index */
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-strong);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.7));
+            padding: var(--space-lg);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-overlay h4 {
+            color: var(--purple-dark);
+            margin-bottom: var(--space-xs);
+            font-size: var(--font-size-md);
+        }
+        
+        .gallery-overlay p {
+            color: var(--text);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .gallery-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--gradient-dream);
+            color: var(--white);
+            border-radius: 15px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+        
+        .slideshow-container {
+            max-width: 800px;
+            margin: 0 auto var(--space-xl);
+            position: relative;
+            border-radius: var(--border-radius-large);
+            overflow: hidden;
+            box-shadow: var(--shadow-strong);
+            cursor: pointer;
+            z-index: 1; /* Explicit z-index */
+        }
+        
+        .slide {
+            display: none;
+            position: relative;
+            height: 500px;
+        }
+        
+        .slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: var(--space-xl);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .slideshow-container:hover .slide-content {
+            transform: translateY(0);
+        }
+        
+        .slide-nav {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--pink-dream);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-dot.active {
+            background: var(--pink-dark);
+            transform: scale(1.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .featured-slideshow {
+            padding: var(--space-xl) 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            font-size: var(--font-size-xxl);
+            color: var(--purple-dark);
+            margin-bottom: var(--space-xl);
+            text-align: center;
+        }
+        
+        .category-title {
+            font-size: var(--font-size-xl);
+            color: var(--purple-dark);
+            margin-bottom: var(--space-lg);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* NEW: Lightbox overlay styles for fullscreen image viewing */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10002; /* Higher than nav */
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .lightbox-overlay.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            text-align: center;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* Close button for lightbox */
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: -15px;
+            background: var(--gradient-dream);
+            color: var(--white);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            z-index: 10003; /* Higher than lightbox */
+        }
+        
+        .lightbox-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: var(--pink-dark);
+        }
+        
+        .lightbox-info {
+            color: var(--white);
+            text-align: center;
+            margin-top: 20px;
+            max-width: 800px;
+        }
+        
+        .lightbox-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-family: var(--font-heading);
+            color: var(--white);
+        }
+        
+        .lightbox-info p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            color: var(--pink-light);
+        }
+        
+        .lightbox-category {
+            display: inline-block;
+            padding: 6px 15px;
+            background: var(--gradient-dream);
+            color: var(--white);
+            border-radius: 20px;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        /* Instructions for users */
+        .click-instruction {
+            text-align: center;
+            margin-top: var(--space-lg);
+            color: var(--text);
+            font-style: italic;
+            font-size: var(--font-size-sm);
+            opacity: 0.8;
+        }
+        
+        /* Placeholder for empty lightbox image */
+        .lightbox-placeholder {
+            display: none;
+        }
+        
+        /* FIX: Mobile navigation z-index fixes */
+        .nav-container {
+            z-index: 10000; /* Higher z-index for nav */
+        }
+        
+        .hamburger-menu {
+            z-index: 10002; /* Higher than nav container */
+        }
+        
+        .nav-buttons {
+            z-index: 10001; /* Higher than hamburger */
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .gallery-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-hero .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .slideshow-container {
+                max-width: 95%;
+            }
+            
+            .slide {
+                height: 400px;
+            }
+            
+            .lightbox-close {
+                top: -40px;
+                right: 0;
+                width: 40px;
+                height: 40px;
+            }
+            
+            /* FIX: Ensure mobile menu appears on top */
+            .nav-buttons {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 80px 30px 30px;
+                gap: var(--space-md);
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
+                border-left: 1px solid rgba(157, 78, 221, 0.3);
+                z-index: 10001; /* Explicit high z-index */
+            }
+            
+            .nav-buttons.active {
+                right: 0;
+            }
+            
+            .hamburger-menu {
+                display: flex;
+                position: relative;
+                z-index: 10002; /* Higher than nav-buttons */
+            }
+            
+            /* Nav overlay for mobile */
+            .nav-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(5px);
+                z-index: 10000; /* Between nav and buttons */
+                display: none;
+            }
+            
+            .nav-overlay.active {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-hero .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .slide {
+                height: 300px;
+            }
+            
+            .slide-content {
+                padding: var(--space-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Cloud Background -->
+    <div class="cloud-bg">
+        <div class="cloud cloud-large"></div>
+        <div class="cloud cloud-medium"></div>
+        <div class="cloud cloud-small"></div>
+    </div>
+
+    <!-- Twinkling Stars -->
+    <div class="stars-bg" id="starsBg"></div>
+
+    <!-- Hidden placeholder image for lightbox -->
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Placeholder" class="lightbox-placeholder" id="placeholderImage">
+
+    <!-- Lightbox for fullscreen image viewing -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img class="lightbox-image" id="lightboxImage" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Full size image">
+            <div class="lightbox-info" id="lightboxInfo">
+                <span class="lightbox-category" id="lightboxCategory">Digital Art</span>
+                <h3 id="lightboxTitle">Image Title</h3>
+                <p id="lightboxDescription">Image description will appear here</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation - Hamburger menu for mobile -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <span class="logo-text">Eva Nguyen</span>
+            </a>
+            
+            <!-- Hamburger menu button (visible on mobile) -->
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Navigation buttons (hidden on mobile by default) -->
+            <div class="nav-buttons" id="navButtons">
+                <a href="index.html" class="nav-btn">Home</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="graphics.html" class="nav-btn active">Graphics</a>
+                <a href="projects.html" class="nav-btn">Projects</a>
+                <a href="contacts.html" class="nav-btn">Contact</a>
+            </div>
+            
+            <!-- Mobile menu overlay -->
+            <div class="nav-overlay" id="navOverlay"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Gallery Hero -->
+        <section class="gallery-hero">
+            <h1>My Art & Graphic Design Gallery</h1>
+            <p class="tagline">A collection of my favorite illustrations, branding projects, and visual designs</p>
+            <p>Each piece tells a story and captures my styles and inspirations. This gallery showcases my passion for aesthetic visuals.</p>
+            <p class="click-instruction">Click on any image to view it in fullscreen mode</p>
+        </section>
+
+        <!-- Featured Slideshow -->
+        <section class="featured-slideshow">
+            <h2 class="section-title">Digital Artworks</h2>
+            
+            <div class="slideshow-container" id="featuredSlideshow">
+                <!-- Slide 1 -->
+                <div class="slide active" data-title="Putting Words in my Mouth" data-category="Digital Art" data-description="Created with ibispaint X">
+                    <img src="images/untitled%20folder%202/Untitled34.jpg" alt="Artwork of girl with toilet paper in her mouth with a hand drawing on the paper with a pen writing, Putting words in my mouth." class="slide-img">
+                    <div class="slide-content">
+                        <span class="gallery-category">Digital Art</span>
+                        <h3>Putting Words in my Mouth</h3>
+                        <p>Created with ibispaint X</p>
+                    </div>
+                </div>
+                
+                <!-- Slide 2 -->
+                <div class="slide" data-title="Puppet" data-category="Digital Art" data-description="Created with ibispaint X">
+                    <img src="images/untitled%20folder%202/Untitled49.jpg" alt="Artwork of girl being controlled by strings like a puppet." class="slide-img">
+                    <div class="slide-content">
+                        <span class="gallery-category">Digital Art</span>
+                        <h3>Puppet</h3>
+                        <p>Created with ibispaint X</p>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="slide" data-title="Fairytails" data-category="Digital Art" data-description="Created with ibispaint X">
+                    <img src="images/untitled%20folder%202/Untitled47.jpg" alt="Artwork of a fairy sewing back her cocoon." class="slide-img">
+                    <div class="slide-content">
+                        <span class="gallery-category">Digital Art</span>
+                        <h3>Fairytails</h3>
+                        <p>Created with ibispaint X</p>
+                    </div>
+                </div>
+                
+                <!-- Slide 4 -->
+                <div class="slide" data-title="Unmasked Personas" data-category="Digital Art" data-description="Created with ibispaint X">
+                    <img src="images/untitled%20folder%202/Untitled44.png" alt="Artwork of a girl unmasking all of her personas." class="slide-img">
+                    <div class="slide-content">
+                        <span class="gallery-category">Digital Art</span>
+                        <h3>Unmasked Personas</h3>
+                        <p>Created with ibispaint X</p>
+                    </div>
+                </div>
+                
+                <!-- Slide 5 -->
+                <div class="slide" data-title="Passenger Princess" data-category="Illustration" data-description="Created with ibispaint X">
+                    <img src="images/untitled%20folder%202/Untitled42.jpg" alt="A girl sitting in a bus that is destroyed with fire surrounding the bus, yet she looks very peaceful." class="slide-img">
+                    <div class="slide-content">
+                        <span class="gallery-category">Illustration</span>
+                        <h3>Passenger Princess</h3>
+                        <p>Created with ibispaint X</p>
+                    </div>
+                </div> 
+              
+            </div>
+            
+            <div class="slide-nav">
+                <div class="slide-dot active" data-slide="0"></div>
+                <div class="slide-dot" data-slide="1"></div>
+                <div class="slide-dot" data-slide="2"></div>
+                <div class="slide-dot" data-slide="3"></div>
+                <div class="slide-dot" data-slide="4"></div>
+            </div>
+        </section>
+
+        <!-- Graphic Design Section -->
+        <section class="gallery-section">
+            <h2 class="category-title">Graphic Designs</h2>
+            
+            <div class="gallery-tabs">
+                <button class="tab-btn active" data-category="all">All</button>
+                <button class="tab-btn" data-category="illustrator">Illustrator</button>
+                <button class="tab-btn" data-category="photoshop">Photoshop</button>
+                <button class="tab-btn" data-category="express">Express</button>
+                <button class="tab-btn" data-category="canva">Canva</button>
+                <button class="tab-btn" data-category="indesign">InDesign</button>
+            </div>
+            
+            <p class="click-instruction">Click on any image below to view it in fullscreen</p>
+            
+            <div class="gallery-container">
+                <!-- Gallery items (shortened for brevity) -->
+                <div class="gallery-item" data-category="express" data-title="Welcome Back!" data-description="Event">
+                    <img src="images/Welcome%20Back!%20(1).png" alt="Welcome back event flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Welcome Back Event</h4>
+                        <p>Event Flyer</p>
+                        <span class="gallery-category">Adobe Express</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="photoshop" data-title="Wonderstate Coffee" data-description="Promotion">
+                    <img src="images/Untitled79_20241015022215.jpg" alt="Wonderstate Coffee flyer. Buy a bag, plant a tree" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Wonderstate Coffee</h4>
+                        <p>Promotion</p>
+                        <span class="gallery-category">Adobe Photoshop</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="indesign" data-title="Artifcial Intelligence" data-description="Article">
+                    <img src="images/Untitled design (7).png" alt="AI Article" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Artifical Intelligence</h4>
+                        <p>Article</p>
+                        <span class="gallery-category">Adobe InDesign</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="canva" data-title="The Ultimate Study Jam!" data-description="Event">
+                    <img src="images/The%20Ultimate%20Study%20Jam!%20(1).png" alt="Vector Illustration" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>The Ultimate Study Jam!</h4>
+                        <p>Event</p>
+                        <span class="gallery-category">Canva</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="illustrator" data-title="Boba/Tea on Campus!" data-description="Map">
+                    <img src="images/Location%20Project%20(1).png" alt="Vector Illustration" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Boba/Tea on Campus!</h4>
+                        <p>Map</p>
+                        <span class="gallery-category">Adobe Illustrator</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="illustrator" data-title="Badgers in the Olympics" data-description="Timeline">
+                    <img src="images/Badgers%20in%20the%20Olympics%20(2).png" alt="Vector Illustration" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Badgers in the Olympics</h4>
+                        <p>Timeline</p>
+                        <span class="gallery-category">Adobe Illustrator</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="canva" data-title="Fall in love with Falooda" data-description="Event">
+                    <img src="images/Falooda.jpg" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Fall in love with Falooda</h4>
+                        <p>Event</p>
+                        <span class="gallery-category">Canva</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="photoshop" data-title="Parasite 2" data-description="Movie Poster">
+                    <img src="images/FINAL%20MOVIE%20POSTER.jpg" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Parasite 2</h4>
+                        <p>Movie Poster</p>
+                        <span class="gallery-category">Adobe Photoshop</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="express" data-title="LGBTQ+ Affinity group" data-description="Event">
+                    <img src="images/09-25-25%20LGBTQ+%20Affinity%20Group-2.png" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>LGBTQ+ Affinity group</h4>
+                        <p>Event</p>
+                        <span class="gallery-category">Adobe Express</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="canva" data-title="CeO Plant + Paint" data-description="Event">
+                    <img src="images/1.png" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>CeO Plant + Paint</h4>
+                        <p>Event</p>
+                        <span class="gallery-category">Canva</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="illustrator" data-title="Daniel Caesar Tour" data-description="Concert Poster">
+                    <img src="images/Untitled86_20241029110150%202.PNG" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Daniel Caesar Tour</h4>
+                        <p>Concert Poster</p>
+                        <span class="gallery-category">Adobe Illustrator</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="express" data-title="Latine Heritage Month" data-description="Heritage Poster">
+                    <img src="images/LHM%202025-2%20(2).png" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Latine Heritage Month</h4>
+                        <p>Heritage Poster</p>
+                        <span class="gallery-category">Adobe Express</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="canva" data-title="Vote for your next, CeO Student Leaders" data-description="Informational">
+                    <img src="images/2.png" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Vote for your next, CeO Student Leaders</h4>
+                        <p>Informational</p>
+                        <span class="gallery-category">Canva</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="express" data-title="Happy 4 Year Anniversary!" data-description="Celebration">
+                    <img src="images/1027 4 Year Anniversary (1).png" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Happy 4 Year Anniversary!</h4>
+                        <p>Celebration</p>
+                        <span class="gallery-category">Adobe Express</span>
+                    </div>
+                </div>
+                  <div class="gallery-item" data-category="canva" data-title="Shirt for Sale" data-description="Informational">
+                    <img src="images/limited%20sales.jpg" alt="Flyer" class="gallery-img">
+                    <div class="gallery-overlay">
+                        <h4>Shirt for Sale</h4>
+                        <p>Informational</p>
+                        <span class="gallery-category">Canva</span>
+                    </div>
+                </div>
+                
+                
+                <!-- More gallery items would go here -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Hamburger menu functionality - FIXED
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const navButtons = document.getElementById('navButtons');
+        const navOverlay = document.getElementById('navOverlay');
+        
+        if (hamburgerMenu && navButtons) {
+            hamburgerMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navButtons.classList.toggle('active');
+                hamburgerMenu.classList.toggle('active');
+                if (navOverlay) {
+                    navOverlay.classList.toggle('active');
+                }
+            });
+            
+            // Close menu when clicking on overlay
+            if (navOverlay) {
+                navOverlay.addEventListener('click', () => {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    navOverlay.classList.remove('active');
+                });
+            }
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navButtons.classList.contains('active') && 
+                    !hamburgerMenu.contains(e.target) && 
+                    !navButtons.contains(e.target)) {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    if (navOverlay) {
+                        navOverlay.classList.remove('active');
+                    }
+                }
+            });
+            
+            // Close menu when clicking nav links
+            const navLinks = navButtons.querySelectorAll('.nav-btn');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    if (navOverlay) {
+                        navOverlay.classList.remove('active');
+                    }
+                });
+            });
+        }
+        
+        // Lightbox functionality
+        const lightboxOverlay = document.getElementById('lightboxOverlay');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxDescription = document.getElementById('lightboxDescription');
+        const lightboxCategory = document.getElementById('lightboxCategory');
+        
+        // Set a transparent placeholder image initially
+        const transparentImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        lightboxImage.src = transparentImage;
+        lightboxImage.alt = "Image preview";
+        
+        // Function to open lightbox with image
+        function openLightbox(imgSrc, title, category, description) {
+            if (!imgSrc || imgSrc === '') {
+                console.error('No image source provided');
+                return;
+            }
+            
+            // Close mobile menu if open
+            if (navButtons && navButtons.classList.contains('active')) {
+                navButtons.classList.remove('active');
+                hamburgerMenu.classList.remove('active');
+                if (navOverlay) {
+                    navOverlay.classList.remove('active');
+                }
+            }
+            
+            // Set image source and add loading state
+            lightboxImage.src = transparentImage;
+            lightboxImage.style.opacity = '0.5';
+            
+            // Create a new image to preload
+            const preloadImage = new Image();
+            preloadImage.onload = function() {
+                lightboxImage.src = imgSrc;
+                lightboxImage.style.opacity = '1';
+                lightboxImage.alt = title || "Gallery image";
+            };
+            
+            preloadImage.onerror = function() {
+                console.error('Failed to load image:', imgSrc);
+                lightboxImage.src = transparentImage;
+                lightboxImage.style.opacity = '1';
+                lightboxImage.alt = "Image failed to load";
+            };
+            
+            preloadImage.src = imgSrc;
+            
+            // Set text content
+            lightboxTitle.textContent = title || "Image Title";
+            lightboxDescription.textContent = description || "Image description";
+            lightboxCategory.textContent = category || "Category";
+            
+            // Show lightbox
+            lightboxOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function to close lightbox
+        function closeLightbox() {
+            lightboxOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Add click events to gallery items
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgElement = item.querySelector('.gallery-img');
+                const imgSrc = imgElement ? imgElement.src : '';
+                const title = item.getAttribute('data-title');
+                const category = item.querySelector('.gallery-category') ? item.querySelector('.gallery-category').textContent : "Uncategorized";
+                const description = item.getAttribute('data-description');
+                
+                if (imgSrc && imgSrc !== '') {
+                    openLightbox(imgSrc, title, category, description);
+                } else {
+                    console.error('No image source found for gallery item');
+                }
+            });
+        });
+        
+        // Add click event to slideshow images
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach(slide => {
+            slide.addEventListener('click', () => {
+                const imgElement = slide.querySelector('.slide-img');
+                const imgSrc = imgElement ? imgElement.src : '';
+                const title = slide.getAttribute('data-title');
+                const category = slide.querySelector('.gallery-category') ? slide.querySelector('.gallery-category').textContent : "Uncategorized";
+                const description = slide.getAttribute('data-description');
+                
+                if (imgSrc && imgSrc !== '') {
+                    openLightbox(imgSrc, title, category, description);
+                } else {
+                    console.error('No image source found for slide');
+                }
+            });
+        });
+        
+        // Add click event to close button
+        lightboxClose.addEventListener('click', closeLightbox);
+        
+        // Close lightbox when clicking outside the image
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) {
+                closeLightbox();
+            }
+        });
+        
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightboxOverlay.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+        
+        // Slideshow functionality
+        let currentSlide = 0;
+        const dots = document.querySelectorAll('.slide-dot');
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+        
+        // Add click events to dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+        
+        // Auto-advance slideshow
+        let slideshowInterval = setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+        
+        // Pause slideshow on hover
+        const slideshowContainer = document.getElementById('featuredSlideshow');
+        if (slideshowContainer) {
+            slideshowContainer.addEventListener('mouseenter', () => {
+                clearInterval(slideshowInterval);
+            });
+            
+            slideshowContainer.addEventListener('mouseleave', () => {
+                slideshowInterval = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 5000);
+            });
+        }
+        
+        // Gallery filtering
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const category = btn.getAttribute('data-category');
+                
+                galleryItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Initialize with "All" category showing
+        window.addEventListener('DOMContentLoaded', () => {
+            galleryItems.forEach(item => {
+                item.style.display = 'block';
+            });
+        });
+        
+        // Create twinkling stars
+        const starsBg = document.getElementById('starsBg');
+        if (starsBg) {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Randomly assign size
+                const sizes = ['star-small', 'star-medium', 'star-large'];
+                star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsBg.appendChild(star);
+            }
+        }
+        
+        // Ensure all images have proper src attributes
+        document.addEventListener('DOMContentLoaded', () => {
+            const allImages = document.querySelectorAll('img');
+            allImages.forEach(img => {
+                if (!img.src || img.src === '') {
+                    img.src = transparentImage;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

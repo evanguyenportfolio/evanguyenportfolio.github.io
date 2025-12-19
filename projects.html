@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Projects | Eva Nguyen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Projects specific styles - No animations */
+        .projects-hero {
+            text-align: center;
+            padding: var(--space-xxl) 0;
+            position: relative;
+            z-index: 1;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .projects-title {
+            font-size: 3rem;
+            background: var(--gradient-sunset);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-md);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--purple-dark);
+            margin-bottom: var(--space-lg);
+            font-family: var(--font-cursive);
+            text-align: center;
+            display: block;
+            width: 100%;
+        }
+        
+        .projects-hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: var(--font-size-md);
+            color: var(--text);
+            line-height: 1.8;
+        }
+        
+        .project-details {
+            background: var(--white-transparent);
+            border-radius: var(--border-radius-large);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-xl);
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .project-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+        
+        @media (max-width: 768px) {
+            .project-header {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .project-info h2 {
+            color: var(--purple-dark);
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+        }
+        
+        .project-meta {
+            display: flex;
+            gap: var(--space-xl);
+            margin-top: var(--space-lg);
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            background: var(--pink-dream);
+            padding: var(--space-md);
+            border-radius: 15px;
+            min-width: 150px;
+        }
+        
+        .meta-item h4 {
+            color: var(--pink-dark);
+            margin-bottom: var(--space-xs);
+            font-size: var(--font-size-sm);
+        }
+        
+        .meta-item p {
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        /* THREE PHONES IN ONE ROW HORIZONTALLY */
+        .phone-images-container {
+            margin: var(--space-xl) 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        .phone-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .phone-image-wrapper {
+            position: relative;
+            width: 234px;
+            height: 489px; /* 250 * (4/3) = 333px for 4:3 aspect ratio */
+            background: var(--gradient-cloud);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            border: 8px solid #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .phone-image-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-large);
+        }
+        
+        .phone-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 15px 20px;
+            font-size: 0.9rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .phone-image-wrapper:hover .image-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Phone notch (optional detail) */
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 15px;
+            background: #333;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            z-index: 2;
+        }
+        
+        /* Phone labels for each image */
+        .phone-label {
+            text-align: center;
+            margin-top: var(--space-sm);
+            color: var(--purple-dark);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .phone-images-container {
+                gap: var(--space-lg);
+            }
+            
+            .phone-image-wrapper {
+                width: 220px;
+                height: 293px; /* 220 * (4/3) = 293px */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .phone-images-container {
+                flex-direction: column;
+                gap: var(--space-xl);
+            }
+            
+            .phone-image-wrapper {
+                width: 250px;
+                height: 333px;
+            }
+        }
+        
+        .process-timeline {
+            position: relative;
+            padding-left: var(--space-xl);
+            margin: var(--space-xl) 0;
+        }
+        
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-dream);
+        }
+        
+        .process-step {
+            position: relative;
+            margin-bottom: var(--space-xl);
+            padding: var(--space-lg);
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: var(--space-lg);
+            width: 20px;
+            height: 20px;
+            background: var(--gradient-dream);
+            border-radius: 50%;
+            border: 4px solid var(--white);
+            box-shadow: var(--glow-pink);
+        }
+        
+        .step-number {
+            position: absolute;
+            left: -42px;
+            top: var(--space-lg);
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple-dark);
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            z-index: 2;
+        }
+        
+        .process-step h4 {
+            color: var(--purple-dark);
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-lg);
+        }
+        
+        .ui-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+        }
+        
+        .ui-element {
+            background: var(--white);
+            border-radius: 15px;
+            padding: var(--space-md);
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+        
+        .ui-element:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .ui-element i {
+            font-size: 2rem;
+            color: var(--purple-dark);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .color-palette {
+            display: flex;
+            gap: var(--space-sm);
+            margin: var(--space-lg) 0;
+        }
+        
+        .color-item {
+            flex: 1;
+            height: 60px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .color-item::after {
+            content: attr(data-color);
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        
+        /* Hamburger Menu Styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10002 !important;
+            position: relative;
+        }
+        
+        .hamburger-line {
+            width: 100%;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        /* Fix for mobile navigation */
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: flex;
+            }
+            
+            .nav-buttons {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 80px 30px 30px;
+                gap: var(--space-md);
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
+                border-left: 1px solid rgba(157, 78, 221, 0.3);
+                z-index: 10001 !important;
+            }
+            
+            .nav-buttons.active {
+                right: 0;
+            }
+            
+            /* Nav overlay for mobile */
+            .nav-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(5px);
+                z-index: 10000 !important;
+                display: none;
+            }
+            
+            .nav-overlay.active {
+                display: block;
+            }
+            
+            .nav-container {
+                z-index: 10003 !important;
+            }
+            
+            /* Make sure all content stays below nav */
+            .main-container,
+            .projects-hero,
+            .featured-project,
+            .project-details,
+            .project-header,
+            .design-process,
+            .key-features {
+                z-index: 1 !important;
+            }
+            
+            /* Mobile adjustments */
+            .projects-title {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Cloud Background -->
+    <div class="cloud-bg">
+        <div class="cloud cloud-large"></div>
+        <div class="cloud cloud-medium"></div>
+        <div class="cloud cloud-small"></div>
+    </div>
+
+    <!-- Twinkling Stars -->
+    <div class="stars-bg" id="starsBg"></div>
+
+    <!-- Navigation - Hamburger menu for mobile -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <span class="logo-text">Eva Nguyen</span>
+            </a>
+            
+            <!-- Hamburger menu button (visible on mobile) -->
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Navigation buttons (hidden on mobile by default) -->
+            <div class="nav-buttons" id="navButtons">
+                <a href="index.html" class="nav-btn">Home</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="graphics.html" class="nav-btn">Graphics</a>
+                <a href="projects.html" class="nav-btn active">Projects</a>
+                <a href="contacts.html" class="nav-btn">Contact</a>
+            </div>
+            
+            <!-- Mobile menu overlay -->
+            <div class="nav-overlay" id="navOverlay"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Projects Hero -->
+        <section class="projects-hero">
+            <div class="projects-title-container">
+                <h1 class="projects-title">UI/UX Project</h1>
+            </div>
+            <p class="tagline">Discover the design process behind my digital creations</p>
+            <p>The project below showcase my approach to user-centered design, from initial research to final implementation. I believe in creating experiences that are both beautiful and functional. I am beginning my UX/UI journey so be on the look out for more projects to come!</p>
+        </section>
+
+        <!-- Featured Project -->
+        <section class="featured-project" id="dream-journal">
+            <div class="project-details">
+                <div class="project-header">
+                    <div class="project-info">
+                        <span class="project-badge" style="display: inline-block; margin-bottom: var(--space-md); padding: 8px 16px; background: var(--gradient-dream); color: white; border-radius: 20px; font-weight: 500; font-size: var(--font-size-sm);">Case Study</span>
+                        <h2>Mood Meals</h2>
+                        <p>A mobile application I designed to track a user's mood each day, which will determine the types of personalized meals they are suggested to have that day.</p>
+                        
+                        <div class="project-meta">
+                            <div class="meta-item">
+                                <h4>Timeline</h4>
+                                <p>2 Months</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>Platform</h4>
+                                <p>iOS & Android</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>Tools</h4>
+                                <p>Figma</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- THREE PHONES IN ONE ROW HORIZONTALLY -->
+                <div class="phone-images-container">
+                    <!-- Phone Image 1 -->
+                    <div class="phone-item">
+                        <div class="phone-image-wrapper">
+                            <div class="phone-notch"></div>
+                            <img src="1x/Artboard%202.png" alt="Mood Meals Sign In" class="phone-image">
+                            <div class="image-caption">Mood Meals sign in</div>
+                        </div>
+                        <div class="phone-label">Sign In Screen</div>
+                    </div>
+                    
+                    <!-- Phone Image 2 -->
+                    <div class="phone-item">
+                        <div class="phone-image-wrapper">
+                            <div class="phone-notch"></div>
+                            <img src="1x/Artboard%203.png" alt="Meal Planning Screen" class="phone-image">
+                            <div class="image-caption">Mood tracking survey</div>
+                        </div>
+                        <div class="phone-label">Mood Survey Screen</div>
+                    </div>
+                    
+                    <!-- Phone Image 3 -->
+                    <div class="phone-item">
+                        <div class="phone-image-wrapper">
+                            <div class="phone-notch"></div>
+                            <img src="1x/Artboard%201.png" alt="Recipe Details" class="phone-image">
+                            <div class="image-caption">Stared meals and recipe suggestions</div>
+                        </div>
+                        <div class="phone-label">Stared Meals Screen</div>
+                    </div>
+                </div>
+                
+                <!-- Design Process -->
+                <div class="design-process">
+                    <h3 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-lg); text-align: center;">My Design Process</h3>
+                    
+                    <div class="process-timeline">
+                        <!-- Step 1 -->
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <h4>Research & Discovery</h4>
+                            <p>I conducted interviews with 20 potential users to understand their diet habits. Key insights revealed that people wanted simple recipes that they can make easily each day or even meals that can eat throughout the week.</p>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <h4>User Personas & Journey</h4>
+                            <p>Created a primary user persona which was a typical college student who lives on campus, and they struggle with cooking daily meals or finding ideas of what to eat next. They look for simple and affordable recipes they can make while uplifting their mood and energy for the day.</p>
+                            <div class="ui-showcase">
+                            
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <h4>Wireframing & Prototyping</h4>
+                            <p>Developed mid to high-fidelity wireframes focusing on the look in digital tools like Figma for more refined elements, clearer text/images.</p>
+                            <div style="display: flex; gap: var(--space-md); margin-top: var(--space-sm);">
+                                <span style="padding: 6px 15px; background: var(--pink-dream); color: var(--pink-dark); border-radius: 15px; font-size: var(--font-size-sm);">Low-Fidelity</span>
+                                <span style="padding: 6px 15px; background: var(--purple-dream); color: var(--purple-dark); border-radius: 15px; font-size: var(--font-size-sm);">Mid-Fidelity</span>
+                                <span style="padding: 6px 15px; background: var(--blue-dream); color: var(--blue-dark); border-radius: 15px; font-size: var(--font-size-sm);">High-Fidelity</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 -->
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <h4>Visual Design System</h4>
+                            <p>Developed a cohesive design system with a soft pastel color palette, dream-inspired icons, and smooth micro-interactions.</p>
+                            
+                            <!-- Color Palette -->
+                            <div class="color-palette">
+                                <div class="color-item" style="background: #667c4e;" data-color="#FFCFE5"></div>
+                                <div class="color-item" style="background: #f0f0d2;" data-color="#E6D1FF"></div>
+                                <div class="color-item" style="background: #def2e5;" data-color="#D1EAFF"></div>
+                                <div class="color-item" style="background: #b0b453;" data-color="#F0D9FF"></div>
+                                <div class="color-item" style="background: #fff600;" data-color="#D9FFE6"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 5 -->
+                        <div class="process-step">
+                            <div class="step-number">5</div>
+                            <h4>Testing & Iteration</h4>
+                            <p>Conducted usability tests with participants. Made iterations based on feedback, including simplifying the process and adding functionality.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Key Features -->
+                <div class="key-features" style="margin-top: var(--space-xl);">
+                    <h3 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-lg); text-align: center;">Key Features</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
+                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
+                            <div style="width: 50px; height: 50px; background: var(--gradient-dream); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
+                                <i class="fas fa-moon" style="color: white; font-size: 1.2rem;"></i>
+                            </div>
+                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Mood Survey</h4>
+                            <p style="color: var(--text); line-height: 1.6;">Surveys user's mood throughout the day to customize meal ideas based on specific moods</p>
+                        </div>
+                        
+                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
+                            <div style="width: 50px; height: 50px; background: var(--gradient-sunset); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
+                                <i class="fas fa-chart-pie" style="color: white; font-size: 1.2rem;"></i>
+                            </div>
+                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Star Meals</h4>
+                            <p style="color: var(--text); line-height: 1.6;">Generates different meals and suggestions with a starred category of user's favorites</p>
+                        </div>
+                        
+                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
+                            <div style="width: 50px; height: 50px; background: var(--gradient-sky); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
+                                <i class="fas fa-cloud-moon" style="color: white; font-size: 1.2rem;"></i>
+                            </div>
+                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Calming Interface</h4>
+                            <p style="color: var(--text); line-height: 1.6;">Gentle colors and gradients for calming use</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Hamburger menu functionality only
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const navButtons = document.getElementById('navButtons');
+        const navOverlay = document.getElementById('navOverlay');
+        
+        if (hamburgerMenu && navButtons) {
+            hamburgerMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navButtons.classList.toggle('active');
+                hamburgerMenu.classList.toggle('active');
+                if (navOverlay) {
+                    navOverlay.classList.toggle('active');
+                }
+            });
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', () => {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    navOverlay.classList.remove('active');
+                });
+            }
+            
+            document.addEventListener('click', (e) => {
+                if (navButtons.classList.contains('active') && 
+                    !hamburgerMenu.contains(e.target) && 
+                    !navButtons.contains(e.target)) {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    if (navOverlay) {
+                        navOverlay.classList.remove('active');
+                    }
+                }
+            });
+            
+            const navLinks = navButtons.querySelectorAll('.nav-btn');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    if (navOverlay) {
+                        navOverlay.classList.remove('active');
+                    }
+                });
+            });
+        }
+        
+        // Create simple twinkling stars
+        const starsBg = document.getElementById('starsBg');
+        if (starsBg) {
+            for (let i = 0; i < 60; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const sizes = ['star-small', 'star-medium', 'star-large'];
+                star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+                
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsBg.appendChild(star);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Me | Eva Nguyen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Contact specific styles */
+        .contact-hero {
+            text-align: center;
+            padding: var(--space-xxl) 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xl);
+            padding: var(--space-xl) 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-xl);
+            width: 100%;
+        }
+        
+        .contact-info {
+            background: var(--white-transparent);
+            border-radius: var(--border-radius-large);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            flex: 1;
+            min-width: 298px;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-lg);
+            background: var(--white);
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .contact-method:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .method-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-dream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .method-icon i {
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+        
+        .method-info h4 {
+            color: var(--purple-dark);
+            margin-bottom: var(--space-xs);
+            text-align: left;
+        }
+        
+        .method-info p {
+            color: var(--text);
+            font-size: var(--font-size-sm);
+            text-align: left;
+        }
+        
+        .social-connect {
+            text-align: center;
+            padding: var(--space-xl) 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-md);
+            max-width: 800px;
+            margin: var(--space-xl) auto;
+        }
+        
+        .social-card {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+            text-decoration: none;
+            display: block;
+        }
+        
+        .social-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--space-md);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .linkedin { background: #388fbc; color: white; }
+        .email { background: #ed81c3; color: white; }
+        .handshake { background: #aa96da; color: white; }
+        .phone { background: #5158a9; color: white; }
+        
+        .social-card h4 {
+            color: var(--purple-dark);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .social-card p {
+            color: var(--text);
+            font-size: var(--font-size-sm);
+        }
+        
+        .contact-action {
+            margin-top: var(--space-xl);
+            padding: var(--space-lg);
+            background: var(--gradient-cloud);
+            border-radius: var(--border-radius-large);
+        }
+        
+        .contact-action h3 {
+            color: var(--purple-dark);
+            margin-bottom: var(--space-md);
+        }
+        
+        .contact-action p {
+            color: var(--purple-dark);
+            font-size: var(--font-size-md);
+            margin-bottom: var(--space-md);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Hamburger Menu Styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10002 !important;
+            position: relative;
+        }
+        
+        .hamburger-line {
+            width: 100%;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-menu.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        /* Fix for mobile navigation - HIGH Z-INDEX */
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: flex;
+            }
+            
+            .nav-buttons {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 80px 30px 30px;
+                gap: var(--space-md);
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
+                border-left: 1px solid rgba(157, 78, 221, 0.3);
+                z-index: 10001 !important;
+            }
+            
+            .nav-buttons.active {
+                right: 0;
+            }
+            
+            /* Nav overlay for mobile */
+            .nav-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(5px);
+                z-index: 10000 !important;
+                display: none;
+            }
+            
+            .nav-overlay.active {
+                display: block;
+            }
+            
+            .nav-container {
+                z-index: 10003 !important;
+            }
+            
+            /* Make sure all content stays below nav */
+            .main-container,
+            .contact-hero,
+            .contact-content,
+            .contact-row,
+            .contact-info,
+            .social-connect {
+                z-index: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Cloud Background -->
+    <div class="cloud-bg">
+        <div class="cloud cloud-large"></div>
+        <div class="cloud cloud-medium"></div>
+        <div class="cloud cloud-small"></div>
+    </div>
+
+    <!-- Twinkling Stars -->
+    <div class="stars-bg" id="starsBg"></div>
+
+    <!-- Navigation - Hamburger menu for mobile -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <span class="logo-text">Eva Nguyen</span>
+            </a>
+            
+            <!-- Hamburger menu button (visible on mobile) -->
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Navigation buttons (hidden on mobile by default) -->
+            <div class="nav-buttons" id="navButtons">
+                <a href="index.html" class="nav-btn">Home</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="graphics.html" class="nav-btn">Graphics</a>
+                <a href="projects.html" class="nav-btn">Projects</a>
+                <a href="contacts.html" class="nav-btn active">Contact</a>
+            </div>
+            
+            <!-- Mobile menu overlay -->
+            <div class="nav-overlay" id="navOverlay"></div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Contact Hero -->
+        <section class="contact-hero">
+            <h1 style="font-size: 3rem; margin-bottom: var(--space-sm); background: var(--gradient-sunset); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Let's get Connected!</h1>
+            <p class="tagline" style="font-size: 1.5rem; color: var(--purple-dark); margin-bottom: var(--space-lg);">I'd love bring your ideas to life!</p>
+        </section>
+
+        <!-- Contact Content - CENTERED -->
+        <section class="contact-content">
+            <div class="contact-row">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <h2 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-md);">Contact Information</h2>
+                    
+                    <div class="contact-methods">
+                        <!-- Email -->
+                        <a href="mailto:evanguyen2904@gmail.com?subject=Portfolio Inquiry&body=Hi Eva, I saw your portfolio and would like to discuss..." class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Email Me</h4>
+                                <p>evanguyen2904@gmail.com</p>
+        
+                            </div>
+                        </a>
+                        
+                        <!-- Phone -->
+                        <a href="tel:+14145148660" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Call or Message</h4>
+                                <p>+1 (414) 514-8660</p>
+                                <p style="font-size: var(--font-size-xs); color: var(--dark-gray); margin-top: 4px;">Available Monday-Friday, 11am-6pm CST</p>
+                            </div>
+                        </a>
+                        
+                        <!-- Location -->
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Based In</h4>
+                                <p>Milwaukee and Madison, Wisconsin, USA</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Connect -->
+        <section class="social-connect">
+            <h2 class="section-title" style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-md);">More Connections!</h2>
+            
+            <div class="social-grid">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/eva-nguyen-680b62251/" target="_blank" class="social-card">
+                    <div class="social-icon linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                    <h4>LinkedIn</h4>
+                
+                </a>
+                
+                
+                <!-- Handshake -->
+                <a href="https://wisc.joinhandshake.com/profiles/evangyn" target="_blank" class="social-card">
+                    <div class="social-icon handshake">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Handshake</h4>
+                
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Hamburger menu functionality - Same as other pages
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const navButtons = document.getElementById('navButtons');
+        const navOverlay = document.getElementById('navOverlay');
+        
+        if (hamburgerMenu && navButtons) {
+            hamburgerMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navButtons.classList.toggle('active');
+                hamburgerMenu.classList.toggle('active');
+                if (navOverlay) {
+                    navOverlay.classList.toggle('active');
+                }
+            });
+            
+            // Close menu when clicking on overlay
+            if (navOverlay) {
+                navOverlay.addEventListener('click', () => {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    navOverlay.classList.remove('active');
+                });
+            }
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (navButtons.classList.contains('active') && 
+                    !hamburgerMenu.contains(e.target) && 
+                    !navButtons.contains(e.target)) {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    if (navOverlay) {
+                        navOverlay.classList.remove('active');
+                    }
+                }
+            });
+            
+            // Close menu when clicking nav links
+            const navLinks = navButtons.querySelectorAll('.nav-btn');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navButtons.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    if (navOverlay) {
+                        navOverlay.classList.remove('active');
+                    }
+                });
+            });
+        }
+        
+        // Create twinkling stars
+        const starsBg = document.getElementById('starsBg');
+        if (starsBg) {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Randomly assign size
+                const sizes = ['star-small', 'star-medium', 'star-large'];
+                star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsBg.appendChild(star);
+            }
+        }
+        
+        // Remove the alert functionality since we're using actual links now
+        // The contact methods now have proper mailto: and tel: links
+        
+        // Add hover effect to social cards
+        const socialCards = document.querySelectorAll('.social-card');
+        socialCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
