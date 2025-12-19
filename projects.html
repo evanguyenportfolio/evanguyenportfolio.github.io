@@ -54,7 +54,7 @@
             margin-bottom: var(--space-xl);
             box-shadow: var(--shadow-soft);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.13);
         }
         
         .project-header {
@@ -101,7 +101,8 @@
             font-weight: 600;
         }
         
-        /* THREE PHONES IN ONE ROW HORIZONTALLY */
+        /* REAL IPHONE-SIZED MOCKUPS */
+        /* iPhone 16/16 Pro: 6.1" display (147.5mm x 71.5mm, 19.5:9 aspect ratio) */
         .phone-images-container {
             margin: var(--space-xl) 0;
             display: flex;
@@ -121,79 +122,110 @@
         
         .phone-image-wrapper {
             position: relative;
-            width: 234px;
-            height: 489px; /* 250 * (4/3) = 333px for 4:3 aspect ratio */
-            background: var(--gradient-cloud);
-            border-radius: 25px;
+            width: 219px; /* Approx. iPhone 16 Pro width scaled */
+            height: 455px; /* iPhone 16 Pro height (300 * 2.06 = 618) - 19.5:9 aspect ratio */
+            background: #1d1d1f; /* iPhone dark color */
+            border-radius: 27px; /* iPhone rounded corners */
             overflow: hidden;
-            box-shadow: var(--shadow-medium);
-            border: 8px solid #333;
+            box-shadow: 
+                0 3px 16px rgba(51, 4, 69, 0.42),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 0 0 2px rgba(0, 0, 0, 0.2);
+            border: 4px solid #1d1d1f;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .phone-image-wrapper:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-large);
+            transform: translateY(-8px);
+            box-shadow: 
+                22 7px 19px rgba(109, 40, 178, 0.24),
+                inset 0 0 0 3px rgba(49, 13, 98, 0.45),
+                inset 0 0 0 2px rgba(58, 5, 119, 0.64);
         }
         
-        .phone-image {
-            width: 100%;
+        .phone-screen {
+            width: 98%;
             height: 100%;
             object-fit: cover;
+            border-radius: 22px; /* Slightly smaller than phone body */
         }
         
-        .image-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            color: white;
-            padding: 15px 20px;
-            font-size: 0.9rem;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
         
         .phone-image-wrapper:hover .image-caption {
             opacity: 1;
             transform: translateY(0);
         }
         
-        /* Phone notch (optional detail) */
-        .phone-notch {
+        /* iPhone Dynamic Island (modern iPhone notch) */
+        .dynamic-island {
             position: absolute;
-            top: 0;
+            top: 6px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40%;
-            height: 15px;
-            background: #333;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            z-index: 2;
+            width: 76px;
+            height: 10px;
+            background: #1d1d1f;
+            border-radius: 14px;
+            z-index: 10;
+            box-shadow: 0 0 -1px rgba(22, 14, 82, 0.5);
+        }
+        
+        /* iPhone side buttons */
+        .volume-button {
+            position: absolute;
+            right: -8px;
+            top: 120px;
+            width: 4px;
+            height: 60px;
+            background: #1d1d1f;
+            border-radius: 2px;
+            box-shadow: 
+                inset 0 0 2px rgba(255, 255, 255, 0.1),
+                0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .power-button {
+            position: absolute;
+            right: -8px;
+            top: 220px;
+            width: 4px;
+            height: 40px;
+            background: #1d1d1f;
+            border-radius: 2px;
+            box-shadow: 
+                inset 0 0 2px rgba(255, 255, 255, 0.1),
+                0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
         /* Phone labels for each image */
         .phone-label {
             text-align: center;
-            margin-top: var(--space-sm);
+            margin-top: var(--space-md);
             color: var(--purple-dark);
             font-weight: 500;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            background: var(--white-transparent);
+            padding: 10px 20px;
+            border-radius: 23px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-soft);
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
+        /* Responsive adjustments - KEEP SAME SIZE ON ALL DEVICES */
+        @media (max-width: 1200px) {
             .phone-images-container {
                 gap: var(--space-lg);
             }
+        }
+        
+        @media (max-width: 992px) {
+            .phone-images-container {
+                gap: var(--space-md);
+            }
             
             .phone-image-wrapper {
-                width: 220px;
-                height: 293px; /* 220 * (4/3) = 293px */
+                width: 280px;
+                height: 577px; /* Maintain 19.5:9 aspect ratio */
             }
         }
         
@@ -204,8 +236,22 @@
             }
             
             .phone-image-wrapper {
-                width: 250px;
-                height: 333px;
+                width: 300px; /* Same size as desktop */
+                height: 619px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .phone-image-wrapper {
+                width: 280px;
+                height: 577px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .phone-image-wrapper {
+                width: 260px;
+                height: 536px;
             }
         }
         
@@ -476,7 +522,7 @@
                 <h1 class="projects-title">UI/UX Project</h1>
             </div>
             <p class="tagline">Discover the design process behind my digital creations</p>
-            <p>The project below showcases my approach to user-centered design, from initial research to final implementation. I believe in creating experiences that are both beautiful and functional. Iam starting my UX/UI journey, so stay tuned for more projects to come!</p>
+            <p>The project below showcases my approach to user-centered design, from initial research to final implementation. I believe in creating experiences that are both beautiful and functional. I am beginning my UX/UI journey so be on the look out for more projects to come!</p>
         </section>
 
         <!-- Featured Project -->
@@ -505,36 +551,42 @@
                     </div>
                 </div>
                 
-                <!-- THREE PHONES IN ONE ROW HORIZONTALLY -->
+                <!-- THREE IPHONE MOCKUPS IN ONE ROW -->
                 <div class="phone-images-container">
-                    <!-- Phone Image 1 -->
+                    <!-- iPhone 1 -->
                     <div class="phone-item">
                         <div class="phone-image-wrapper">
-                            <div class="phone-notch"></div>
-                            <img src="1x/Artboard 2.png" alt="Mood Meals Sign In" class="phone-image">
+                            <div class="dynamic-island"></div>
+                            <div class="volume-button"></div>
+                            <div class="power-button"></div>
+                            <img src="1x/Artboard 2.png" alt="Mood Meals Sign In" class="phone-screen">
                             <div class="image-caption">Mood Meals sign in</div>
                         </div>
                         <div class="phone-label">Sign In Screen</div>
                     </div>
                     
-                    <!-- Phone Image 2 -->
+                    <!-- iPhone 2 -->
                     <div class="phone-item">
                         <div class="phone-image-wrapper">
-                            <div class="phone-notch"></div>
-                            <img src="1x/Artboard 3.png" alt="Meal Planning Screen" class="phone-image">
+                            <div class="dynamic-island"></div>
+                            <div class="volume-button"></div>
+                            <div class="power-button"></div>
+                            <img src="1x/Artboard 3.png" alt="Meal Planning Screen" class="phone-screen">
                             <div class="image-caption">Mood tracking survey</div>
                         </div>
                         <div class="phone-label">Mood Survey Screen</div>
                     </div>
                     
-                    <!-- Phone Image 3 -->
+                    <!-- iPhone 3 -->
                     <div class="phone-item">
                         <div class="phone-image-wrapper">
-                            <div class="phone-notch"></div>
-                            <img src="1x/Artboard 1.png" alt="Recipe Details" class="phone-image">
-                            <div class="image-caption">Stared meals and recipe suggestions</div>
+                            <div class="dynamic-island"></div>
+                            <div class="volume-button"></div>
+                            <div class="power-button"></div>
+                            <img src="1x/Artboard 1.png" alt="Recipe Details" class="phone-screen">
+                            <div class="image-caption">Starred meals and recipe suggestions</div>
                         </div>
-                        <div class="phone-label">Stared Meals Screen</div>
+                        <div class="phone-label">Starred Meals Screen</div>
                     </div>
                 </div>
                 
@@ -547,14 +599,14 @@
                         <div class="process-step">
                             <div class="step-number">1</div>
                             <h4>Research & Discovery</h4>
-                            <p>I conducted interviews with 20 potential users to understand their diet habits. Key insights revealed that people wanted simple recipes that they could make easily each day, or even meals that could be eaten throughout the week.</p>
+                            <p>I conducted interviews with 20 potential users to understand their diet habits. Key insights revealed that people wanted simple recipes that they can make easily each day or even meals that can eat throughout the week.</p>
                         </div>
                         
                         <!-- Step 2 -->
                         <div class="process-step">
                             <div class="step-number">2</div>
                             <h4>User Personas & Journey</h4>
-                            <p>Created a primary user persona, which was a typical college student who lives on campus, and they struggle with cooking daily meals or finding ideas of what to eat next. They look for simple and affordable recipes they can make while uplifting their mood and energy for the day.</p>
+                            <p>Created a primary user persona which was a typical college student who lives on campus, and they struggle with cooking daily meals or finding ideas of what to eat next. They look for simple and affordable recipes they can make while uplifting their mood and energy for the day.</p>
                             <div class="ui-showcase">
                             
                             </div>
@@ -580,11 +632,11 @@
                             
                             <!-- Color Palette -->
                             <div class="color-palette">
-                                <div class="color-item" style="background: #667c4e;" data-color="#FFCFE5"></div>
-                                <div class="color-item" style="background: #f0f0d2;" data-color="#E6D1FF"></div>
-                                <div class="color-item" style="background: #def2e5;" data-color="#D1EAFF"></div>
-                                <div class="color-item" style="background: #b0b453;" data-color="#F0D9FF"></div>
-                                <div class="color-item" style="background: #fff600;" data-color="#D9FFE6"></div>
+                                <div class="color-item" style="background: #667c4e;" data-color="#667C4E"></div>
+                                <div class="color-item" style="background: #f0f0d2;" data-color="#F0F0D2"></div>
+                                <div class="color-item" style="background: #def2e5;" data-color="#DEF2E5"></div>
+                                <div class="color-item" style="background: #b0b453;" data-color="#B0B453"></div>
+                                <div class="color-item" style="background: #fff600;" data-color="#FFF600"></div>
                             </div>
                         </div>
                         
@@ -615,7 +667,7 @@
                                 <i class="fas fa-chart-pie" style="color: white; font-size: 1.2rem;"></i>
                             </div>
                             <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Star Meals</h4>
-                            <p style="color: var(--text); line-height: 1.6;">Generates different meals and suggestions with a starred category of the user's favorites</p>
+                            <p style="color: var(--text); line-height: 1.6;">Generates different meals and suggestions with a starred category of user's favorites</p>
                         </div>
                         
                         <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
