@@ -473,6 +473,86 @@
                 font-size: 1.3rem;
             }
         }
+
+        /* Image frame for process images */
+        .image-frame {
+            margin-top: var(--space-md);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            background: var(--white);
+            display: inline-block;
+            width: 100%;
+            max-width: 500px;
+        }
+        .image-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .prototype-link {
+            text-align: center;
+            margin-top: var(--space-xl);
+        }
+        .prototype-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gradient-dream);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+        .prototype-link a:hover {
+            transform: translateY(-3px);
+        }
+
+        .key-features {
+            margin-top: var(--space-xl);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+        .feature-card {
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-dream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+        }
+        .feature-icon i {
+            color: white;
+            font-size: 1.2rem;
+        }
+        .feature-card h4 {
+            color: var(--purple-dark);
+            margin-bottom: var(--space-sm);
+        }
+        .feature-card p {
+            color: var(--text);
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -542,7 +622,7 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
                             </div>
                             <div class="meta-item">
                                 <h4>Platform</h4>
-                                <p>Moblie Phone</p>
+                                <p>Mobile Phone</p>
                             </div>
                             <div class="meta-item">
                                 <h4>Tools</h4>
@@ -552,66 +632,62 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
                     </div>
                 </div>
                 
-                <!-- THREE IPHONE MOCKUPS IN ONE ROW -->
+                <!-- FIVE IPHONE MOCKUPS IN HORIZONTAL ROW (including Saved Meals Screen) -->
                 <div class="phone-images-container">
-                    
-                     <div class="phone-item">
+                    <!-- iPhone 1: Login Screen -->
+                    <div class="phone-item">
                         <div class="phone-image-wrapper">
                             <div class="dynamic-island"></div>
                             <div class="volume-button"></div>
                             <div class="power-button"></div>
-                            <img src="images/Untitled (36).png" alt="Mood Meals Sign In" class="phone-screen">
+                            <img src="images/Untitled%20(36).png" alt="Smart Pantry Sign In" class="phone-screen">
                             <div class="image-caption">Smart Pantry sign in</div>
                         </div>
                         <div class="phone-label">Login Screen</div>
                     </div>
                     
-                    <!-- iPhone 1 -->
+                    <!-- iPhone 2: Your Fridge Screen -->
                     <div class="phone-item">
                         <div class="phone-image-wrapper">
                             <div class="dynamic-island"></div>
                             <div class="volume-button"></div>
                             <div class="power-button"></div>
-                            <img src="images/Untitled (37).png" alt="Mood Meals Sign In" class="phone-screen">
-                            <div class="image-caption">Mood Meals sign in</div>
+                            <img src="images/Untitled%20(37).png" alt="Your Fridge" class="phone-screen">
                         </div>
                         <div class="phone-label">Your Fridge Screen</div>
                     </div>
                     
-                    <!-- iPhone 2 -->
+                    <!-- iPhone 3: Barcode/Recipe Scanner -->
                     <div class="phone-item">
                         <div class="phone-image-wrapper">
                             <div class="dynamic-island"></div>
                             <div class="volume-button"></div>
                             <div class="power-button"></div>
-                            <img src="images/Untitled (38).png" alt="Meal Planning Screen" class="phone-screen">
-                            <div class="image-caption">Food Scanner/Camera</div>
+                            <img src="images/Untitled%20(38).png" alt="Food Scanner" class="phone-screen">
                         </div>
                         <div class="phone-label">Barcode/Recipe Scanner</div>
                     </div>
                     
-                    <!-- iPhone 3 -->
+                    <!-- iPhone 4: Saved Meals Screen (horizontal alignment) -->
                     <div class="phone-item">
                         <div class="phone-image-wrapper">
                             <div class="dynamic-island"></div>
                             <div class="volume-button"></div>
                             <div class="power-button"></div>
-                            <img src="images/Untitled (39).png" alt="Recipe Details" class="phone-screen">
-                            <div class="image-caption">Saved meals and recipe Screen</div>
+                            <img src="images/Untitled%20(39).png" alt="Saved Meals" class="phone-screen">
                         </div>
                         <div class="phone-label">Saved Meals Screen</div>
                     </div>
-                </div>
 
-                <div class="phone-item">
+                    <!-- iPhone 5: Added Ingredients Screen -->
+                    <div class="phone-item">
                         <div class="phone-image-wrapper">
                             <div class="dynamic-island"></div>
                             <div class="volume-button"></div>
                             <div class="power-button"></div>
-                            <img src="images/Untitled (40).png" alt="Recipe Details" class="phone-screen">
-                            <div class="image-caption">Added Ingredients Screen</div>
+                            <img src="images/Untitled%20(40).png" alt="Added Ingredients" class="phone-screen">
                         </div>
-                        <div class="phone-label">Saved Meals Screen</div>
+                        <div class="phone-label">Added Ingredients Screen</div>
                     </div>
                 </div>
                 
@@ -628,38 +704,31 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
                         </div>
                         
                        <div class="process-step">
-    <div class="step-number">2</div>
-    <h4>Storyboarding & Behavioral Observation</h4>
-
-    <p>To better understand real cooking behaviors, we observed our college student roommates as they prepared and cooked a meal in a shared apartment kitchen. Rather than following strict recipes, they cooked informally, relying on memory, multitasking between prepping and cooking, and adapting to shared spaces and limited kitchen resources. This experiment helped us identify common pain points such as forgetting ingredients, poor grocery awareness, and inefficient meal planning.
-    After the observation, we translated these experiences into storyboards using sticky notes to map out each step of the cooking process, from gathering ingredients to cleaning up. By comparing each roommate's process side by side, we identified patterns and similarities in their behaviors, frustrations, and decision-making. This helped us uncover repeated challenges and better define opportunities for SmartPantry to support students through smarter pantry tracking, meal suggestions, and expiration management.</p>
-    
-    <!-- Image in a smaller, contained frame -->
-    <div class="image-frame">
-        <img src="images/Untitled (35).png" alt="Storyboarding process">
-    </div>
-    
-    <div class="ui-showcase">
-    
-    </div>
-</div>
+                            <div class="step-number">2</div>
+                            <h4>Storyboarding & Behavioral Observation</h4>
+                            <p>To better understand real cooking behaviors, we observed our college student roommates as they prepared and cooked a meal in a shared apartment kitchen. Rather than following strict recipes, they cooked informally, relying on memory, multitasking between prepping and cooking, and adapting to shared spaces and limited kitchen resources. This experiment helped us identify common pain points such as forgetting ingredients, poor grocery awareness, and inefficient meal planning.
+                            After the observation, we translated these experiences into storyboards using sticky notes to map out each step of the cooking process, from gathering ingredients to cleaning up. By comparing each roommate's process side by side, we identified patterns and similarities in their behaviors, frustrations, and decision-making. This helped us uncover repeated challenges and better define opportunities for SmartPantry to support students through smarter pantry tracking, meal suggestions, and expiration management.</p>
+                            
+                            <div class="image-frame">
+                                <img src="images/Untitled%20(35).png" alt="Storyboarding process">
+                            </div>
+                        </div>
                         
                         <!-- Step 3 -->
                         <div class="process-step">
                             <div class="step-number">3</div>
                             <h4>Wireframing & Prototyping</h4>
-                            <p>With a clear understanding of the user experience, I created low-fidelity wireframes to establish the app’s layout, information hierarchy, and navigation flow. These wireframes helped visualize how users would move through the app and interact with its features. Interactive prototypes were then built to test usability, functionality, and overall flow before moving into final design.</p>
+                            <p>With a clear understanding of the user experience, I created low-fidelity wireframes to establish the app's layout, information hierarchy, and navigation flow. These wireframes helped visualize how users would move through the app and interact with its features. Interactive prototypes were then built to test usability, functionality, and overall flow before moving into final design.</p>
              
-                             <div class="image-frame">
-        <img src="images/Untitled (34).png" alt="Storyboarding process">
-    </div>               
                             <div class="image-frame">
-        <img src="images/Untitled (33).png" alt="Storyboarding process">
-    </div>
+                                <img src="images/Untitled%20(34).png" alt="Wireframe example">
+                            </div>               
                             <div class="image-frame">
-        <img src="images/Untitled (32).png" alt="Storyboarding process">
-    </div>
-                       
+                                <img src="images/Untitled%20(33).png" alt="Wireframe example 2">
+                            </div>
+                            <div class="image-frame">
+                                <img src="images/Untitled%20(32).png" alt="Wireframe example 3">
+                            </div>
                         </div>
                         
                         <!-- Step 4 -->
@@ -670,15 +739,15 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
                             
                             <!-- Color Palette -->
                             <div class="color-palette">
-                                <div class="color-item" style="background: #A1D2DF;" data-color="#667C4E"></div>
-                                <div class="color-item" style="background: #F4F1F3;" data-color="#F0F0D2"></div>
-                                <div class="color-item" style="background: #D9F2FA;" data-color="#DEF2E5"></div>
-                                <div class="color-item" style="background: #4E535C;" data-color="#B0B453"></div>
-                                <div class="color-item" style="background: #000000;" data-color="#FFF600"></div>
+                                <div class="color-item" style="background: #A1D2DF;" data-color="#A1D2DF"></div>
+                                <div class="color-item" style="background: #F4F1F3;" data-color="#F4F1F3"></div>
+                                <div class="color-item" style="background: #D9F2FA;" data-color="#D9F2FA"></div>
+                                <div class="color-item" style="background: #4E535C;" data-color="#4E535C"></div>
+                                <div class="color-item" style="background: #000000;" data-color="#000000"></div>
                             </div>
                             <div class="image-frame">
-        <img src="images/Untitled (31).png" alt="Storyboarding process">
-    </div>
+                                <img src="images/Untitled%20(31).png" alt="Design system">
+                            </div>
                         </div>
                         
                         <!-- Step 5 -->
@@ -687,41 +756,41 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
                             <h4>Testing & Iteration</h4>
                             <p>Once the prototype was developed, I conducted usability testing to evaluate how effectively users could navigate the app and complete tasks such as logging ingredients, checking expiration dates, and finding recipes. Feedback highlighted areas for improvement, which led to multiple design iterations focused on simplifying navigation, improving feature clarity, and making the overall experience faster and more intuitive.</p>
                         </div>
-                            <div class="prototype-link">
-        <a href="https://www.figma.com/proto/633tnAHxpADO1PF3FeGPhs/A8---WIreframes?node-id=146-158&p=f&t=IhoabyF6siIy8N2l-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=152%3A115" target="_blank" rel="noopener noreferrer">
-            <i class="fas fa-external-link-alt"></i> View Interactive Prototype
-        </a>
-    </div>
+                    </div>
+                    <div class="prototype-link">
+                        <a href="https://www.figma.com/proto/633tnAHxpADO1PF3FeGPhs/A8---WIreframes?node-id=146-158&p=f&t=IhoabyF6siIy8N2l-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=152%3A115" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-external-link-alt"></i> View Interactive Prototype
+                        </a>
                     </div>
                 </div>
                 
                 <!-- Key Features -->
-                <div class="key-features" style="margin-top: var(--space-xl);">
+                <div class="key-features">
                     <h3 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-lg); text-align: center;">Key Features</h3>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
-                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
-                            <div style="width: 50px; height: 50px; background: var(--gradient-dream); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
-                                <i class="fas fa-moon" style="color: white; font-size: 1.2rem;"></i>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-moon"></i>
                             </div>
-                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Pantry Tracking</h4>
-                            <p style="color: var(--text); line-height: 1.6;">Users can log and monitor the ingredients they currently have in their fridge and pantry, making it easier to keep track of groceries and avoid duplicate purchases.</p>
+                            <h4>Pantry Tracking</h4>
+                            <p>Users can log and monitor the ingredients they currently have in their fridge and pantry, making it easier to keep track of groceries and avoid duplicate purchases.</p>
                         </div>
                         
-                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
-                            <div style="width: 50px; height: 50px; background: var(--gradient-sunset); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
-                                <i class="fas fa-chart-pie" style="color: white; font-size: 1.2rem;"></i>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-pie"></i>
                             </div>
-                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Recipe Recommendations</h4>
-                            <p style="color: var(--text); line-height: 1.6;">The app suggests meal ideas based on available ingredients, helping users quickly decide what to cook without needing to search for recipes or buy extra items.</p>
+                            <h4>Recipe Recommendations</h4>
+                            <p>The app suggests meal ideas based on available ingredients, helping users quickly decide what to cook without needing to search for recipes or buy extra items.</p>
                         </div>
                         
-                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
-                            <div style="width: 50px; height: 50px; background: var(--gradient-sky); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
-                                <i class="fas fa-cloud-moon" style="color: white; font-size: 1.2rem;"></i>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-cloud-moon"></i>
                             </div>
-                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Expiration Reminders</h4>
-                            <p style="color: var(--text); line-height: 1.6;">Smart notifications alert users when ingredients are close to expiring, encouraging them to use food on time, reduce waste, and save money.</p>
+                            <h4>Expiration Reminders</h4>
+                            <p>Smart notifications alert users when ingredients are close to expiring, encouraging them to use food on time, reduce waste, and save money.</p>
                         </div>
                     </div>
                 </div>
@@ -744,7 +813,7 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
                             </div>
                             <div class="meta-item">
                                 <h4>Platform</h4>
-                                <p>Moblie Phone</p>
+                                <p>Mobile Phone</p>
                             </div>
                             <div class="meta-item">
                                 <h4>Tools</h4>
@@ -810,9 +879,6 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
                             <div class="step-number">2</div>
                             <h4>User Personas & Journey</h4>
                             <p>Created a primary user persona which was a typical college student who lives on campus, and they struggle with cooking daily meals or finding ideas of what to eat next. They look for simple and affordable recipes they can make while uplifting their mood and energy for the day.</p>
-                            <div class="ui-showcase">
-                            
-                            </div>
                         </div>
                         
                         <!-- Step 3 -->
@@ -853,37 +919,38 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
                 </div>
                 
                 <!-- Key Features -->
-                <div class="key-features" style="margin-top: var(--space-xl);">
+                <div class="key-features">
                     <h3 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-lg); text-align: center;">Key Features</h3>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
-                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
-                            <div style="width: 50px; height: 50px; background: var(--gradient-dream); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
-                                <i class="fas fa-moon" style="color: white; font-size: 1.2rem;"></i>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-moon"></i>
                             </div>
-                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Mood Survey</h4>
-                            <p style="color: var(--text); line-height: 1.6;">Surveys user's mood throughout the day to customize meal ideas based on specific moods</p>
+                            <h4>Mood Survey</h4>
+                            <p>Surveys user's mood throughout the day to customize meal ideas based on specific moods</p>
                         </div>
                         
-                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
-                            <div style="width: 50px; height: 50px; background: var(--gradient-sunset); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
-                                <i class="fas fa-chart-pie" style="color: white; font-size: 1.2rem;"></i>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-pie"></i>
                             </div>
-                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Star Meals</h4>
-                            <p style="color: var(--text); line-height: 1.6;">Generates different meals and suggestions with a starred category of user's favorites</p>
+                            <h4>Star Meals</h4>
+                            <p>Generates different meals and suggestions with a starred category of user's favorites</p>
                         </div>
                         
-                        <div style="background: var(--white); padding: var(--space-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-soft);">
-                            <div style="width: 50px; height: 50px; background: var(--gradient-sky); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md);">
-                                <i class="fas fa-cloud-moon" style="color: white; font-size: 1.2rem;"></i>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-cloud-moon"></i>
                             </div>
-                            <h4 style="color: var(--purple-dark); margin-bottom: var(--space-sm);">Calming Interface</h4>
-                            <p style="color: var(--text); line-height: 1.6;">Gentle colors and gradients for calming use</p>
+                            <h4>Calming Interface</h4>
+                            <p>Gentle colors and gradients for calming use</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+    </main>
     <script>
         // Hamburger menu functionality only
         const hamburgerMenu = document.getElementById('hamburgerMenu');
@@ -950,6 +1017,5 @@ Smart Pantry is a mobile app designed to help college students manage groceries,
             }
         }
     </script>
-</main>
 </body>
 </html>
