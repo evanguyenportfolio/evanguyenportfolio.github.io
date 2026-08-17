@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eva Nguyen | Contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600&family=Dancing+Script:wght@500;600;700&family=Itim&family=Indie+Flower&family=Gaegu:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== BACKGROUND ===== -->
+    <div class="fairy-bg">
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+    </div>
+    <div class="stars-bg" id="starsBg"></div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="home.html" class="logo">
+                <span class="logo-text" style="font-family: 'Gaegu', sans-serif; font-weight: 900; letter-spacing: -2px; line-height: 1;">Eva Nguyen</span>
+            </a>
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <div class="nav-buttons" id="navButtons">
+                <a href="home.html" class="nav-btn">Home</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="work.html" class="nav-btn">Work</a>
+                <a href="projects.html" class="nav-btn">Projects</a>
+                <a href="graphics.html" class="nav-btn">Graphics</a>
+                <a href="contact.html" class="nav-btn active">Contact</a>
+            </div>
+            <div class="nav-overlay" id="navOverlay"></div>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-container">
+
+        <!-- ===== CONTACT: HERO SECTION ===== -->
+        <h1 style="font-family: 'Itim', sans-serif; font-size: 45px; color: rgb(229, 90, 130); text-align: center; padding-top: 80px;">Let's Connect!</h1>
+        <p class="tagline" style="color:var(--green-dark); font-family: 'Indie Flower', sans-serif; font-size: 20px; text-align: center; padding-top: 40px;"><i>I'd love to hear from you</i></p>
+        <p style="text-align: center;">Have a project in mind? Want to collaborate? Feel free to reach out!</p>
+
+        <!-- ===== CONTACT: CONTENT SECTION ===== -->
+        <section class="contact-content">
+
+            <!-- ===== CONTACT: INFO COLUMN ===== -->
+            <div class="contact-info">
+                <h2 style="color:var(--green-dark); margin-bottom:var(--space-lg); text-align: center;">Get in Touch</h2>
+
+                <div class="contact-info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email</strong>
+                        <p><a href="mailto:evanguyen2904@gmail.com" style="color: var(--text); text-decoration: none;">evanguyen2904@gmail.com</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Location</strong>
+                        <p>Madison and Milwaukee, WI</p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <strong>Phone</strong>
+                        <p><a href="tel:+14145148660" style="color: var(--text); text-decoration: none;">+1 (414) 514-8660</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <i class="fas fa-globe"></i>
+                    <div>
+                        <strong>Social</strong>
+                        <div style="display:flex; gap:var(--space-sm); margin-top:5px;">
+                            <a href="https://www.linkedin.com/in/eva-nguyen-680b62251/" target="_blank" style="color: #0077b5; font-size: 1.8rem; transition: transform 0.3s, color 0.3s;" title="LinkedIn" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CONTACT: FORM COLUMN ===== -->
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="Subject" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Your message..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
