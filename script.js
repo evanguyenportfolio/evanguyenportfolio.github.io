@@ -1,418 +1,569 @@
-// Dreamy Cloud Portfolio - Main JavaScript
+/* ================================================================
+   FAIRY GARDEN PORTFOLIO - Main JavaScript
+   ================================================================ */
 
-// ==================== UTILITY FUNCTIONS ====================
+document.addEventListener('DOMContentLoaded', function() {
 
-// Create twinkling stars
-function createStars() {
-    const starsBg = document.getElementById('starsBg');
-    if (!starsBg) return;
-    
-    starsBg.innerHTML = '';
-    
-    for (let i = 0; i < 50; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        
-        const size = Math.random() * 3 + 1;
-        if (size < 1.5) star.classList.add('star-small');
-        else if (size < 2.5) star.classList.add('star-medium');
-        else star.classList.add('star-large');
-        
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        const delay = Math.random() * 3;
-        
-        star.style.left = `${left}%`;
-        star.style.top = `${top}%`;
-        star.style.animationDelay = `${delay}s`;
-        
-        starsBg.appendChild(star);
-    }
-}
-
-// Create floating particles
-function createParticles() {
-    const cloudBg = document.querySelector('.cloud-bg');
-    if (!cloudBg) return;
-    
-    for (let i = 0; i < 10; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('cloud');
-        
-        const width = Math.random() * 100 + 50;
-        const height = width * 0.3;
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        const duration = Math.random() * 40 + 20;
-        const delay = Math.random() * 10;
-        
-        const colors = [
-            'linear-gradient(135deg, var(--pink-dream), var(--pink-light))',
-            'linear-gradient(135deg, var(--purple-dream), var(--purple-light))',
-            'linear-gradient(135deg, var(--blue-dream), var(--blue-light))'
-        ];
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        
-        particle.style.width = `${width}px`;
-        particle.style.height = `${height}px`;
-        particle.style.left = `${left}%`;
-        particle.style.top = `${top}%`;
-        particle.style.background = randomColor;
-        particle.style.animationDuration = `${duration}s`;
-        particle.style.animationDelay = `${delay}s`;
-        particle.style.opacity = Math.random() * 0.3 + 0.2;
-        
-        cloudBg.appendChild(particle);
-    }
-}
-
-// Update active navigation based on current page
-function updateActiveNav() {
-    const pathArray = window.location.pathname.split('/');
-    let currentPage = pathArray[pathArray.length - 1];
-    
-    if (currentPage === '' || currentPage === '/') {
-        currentPage = 'index.html';
-    }
-    
-    currentPage = currentPage.replace('.html', '');
-    const navButtons = document.querySelectorAll('.nav-btn');
-    
-    navButtons.forEach(button => {
-        button.classList.remove('active');
-    });
-    
-    navButtons.forEach(button => {
-        const buttonHref = button.getAttribute('href');
-        const buttonPage = buttonHref.replace('.html', '');
-        
-        if (buttonPage === currentPage) {
-            button.classList.add('active');
-        }
-    });
-}
-
-// ==================== ANIMATION FUNCTIONS ====================
-
-// Smooth scrolling for anchor links
-function initSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                e.preventDefault();
-                window.scrollTo({
-                    top: targetElement.offsetTop - 100,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
-
-// Initialize animations
-function initAnimations() {
-    // Hover effects for project cards
-    const projectCards = document.querySelectorAll('.project-card, .gallery-item');
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px)';
-            this.style.boxShadow = 'var(--shadow-strong)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.style.boxShadow = 'var(--shadow-soft)';
-        });
-    });
-    
-    // Parallax effect for cloud background
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const clouds = document.querySelectorAll('.cloud');
-        
-        clouds.forEach((cloud, index) => {
-            const speed = 0.3 + (index * 0.1);
-            const yPos = -(scrolled * speed);
-            cloud.style.transform = `translateY(${yPos}px)`;
-        });
-    });
-    
-    // Ripple effect for buttons
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.6);
-                transform: scale(0);
-                animation: ripple-animation 0.6s linear;
-                width: ${size}px;
-                height: ${size}px;
-                top: ${y}px;
-                left: ${x}px;
-                pointer-events: none;
-            `;
-            
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-    
-    // Add CSS for ripple animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Initialize floating shapes animation for hero
-function initFloatingShapes() {
-    const shapes = document.querySelectorAll('.floating-circle');
-    shapes.forEach((shape, index) => {
-        const duration = 15 + (index * 3);
-        const delay = index * 2;
-        shape.style.animationDuration = `${duration}s`;
-        shape.style.animationDelay = `${delay}s`;
-    });
-}
-
-// ==================== CONTACT FORM FUNCTIONS ====================
-
-// Initialize contact form
-function initContactForm() {
-    const form = document.getElementById('contactForm');
-    if (!form) return;
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(form);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const subject = formData.get('subject');
-        const message = formData.get('message');
-        
-        if (!name || !email || !subject || !message) {
-            showNotification('Please fill in all required fields.', 'error');
-            return;
-        }
-        
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            form.reset();
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            showNotification('✨ Your message has been sent! I\'ll get back to you within 24 hours.', 'success');
-            createConfetti();
-        }, 1500);
-    });
-}
-
-// Show notification
-function showNotification(message, type) {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-        <span>${message}</span>
-    `;
-    
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? 'var(--gradient-dream)' : '#ff6b6b'};
-        color: white;
-        padding: var(--space-md) var(--space-lg);
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow-strong);
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        animation: slideIn 0.3s ease, fadeOut 0.3s ease 3s forwards;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.remove();
-    }, 3300);
-}
-
-// Create confetti effect
-function createConfetti() {
-    const colors = ['#ffcfe5', '#e6d1ff', '#d1eaff', '#f0d9ff'];
-    
-    for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.cssText = `
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            border-radius: 50%;
-            top: -20px;
-            left: ${Math.random() * 100}vw;
-            opacity: 0.8;
-            z-index: 9998;
-            animation: fall ${Math.random() * 3 + 2}s linear forwards;
-            pointer-events: none;
-        `;
-        
-        document.body.appendChild(confetti);
-        
-        setTimeout(() => {
-            confetti.remove();
-        }, 5000);
-    }
-    
-    if (!document.querySelector('#confetti-style')) {
-        const style = document.createElement('style');
-        style.id = 'confetti-style';
-        style.textContent = `
-            @keyframes fall {
-                0% {
-                    transform: translateY(0) rotate(0deg);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translateY(100vh) rotate(360deg);
-                    opacity: 0;
-                }
-            }
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            @keyframes fadeOut {
-                from {
-                    opacity: 1;
-                }
-                to {
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
-
-// ==================== MOBILE MENU FUNCTIONS ====================
-
-// Mobile hamburger menu functionality
-function initMobileMenu() {
+    // ================================================================
+    // ===== NAVIGATION: HAMBURGER MENU =====
+    // ================================================================
     const hamburgerMenu = document.getElementById('hamburgerMenu');
     const navButtons = document.getElementById('navButtons');
-    
-    if (!hamburgerMenu || !navButtons) return;
-    
-    // Create overlay element
-    const overlay = document.createElement('div');
-    overlay.className = 'nav-overlay';
-    document.body.appendChild(overlay);
-    
-    // Toggle menu function (defined as function expression)
-    const toggleMenu = function() {
-        hamburgerMenu.classList.toggle('active');
-        navButtons.classList.toggle('active');
-        overlay.classList.toggle('active');
-        document.body.style.overflow = navButtons.classList.contains('active') ? 'hidden' : '';
-    };
-    
-    // Hamburger button click
-    hamburgerMenu.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleMenu();
-    });
-    
-    // Close menu when clicking overlay
-    overlay.addEventListener('click', function() {
-        toggleMenu();
-    });
-    
-    // Close menu when clicking a nav link
-    const navLinks = navButtons.querySelectorAll('.nav-btn');
-    navLinks.forEach(function(link) {
-        link.addEventListener('click', function() {
+    const navOverlay = document.getElementById('navOverlay');
+
+    if (hamburgerMenu && navButtons) {
+        function toggleMenu() {
+            hamburgerMenu.classList.toggle('active');
+            navButtons.classList.toggle('active');
+            if (navOverlay) {
+                navOverlay.classList.toggle('active');
+            }
+            document.body.style.overflow = navButtons.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        function closeMenu() {
+            hamburgerMenu.classList.remove('active');
+            navButtons.classList.remove('active');
+            if (navOverlay) {
+                navOverlay.classList.remove('active');
+            }
+            document.body.style.overflow = 'auto';
+        }
+
+        hamburgerMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
             toggleMenu();
         });
-    });
-    
-    // Close menu when pressing Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && navButtons.classList.contains('active')) {
-            toggleMenu();
-        }
-    });
-    
-    // Close menu when clicking outside on mobile
-    document.addEventListener('click', function(e) {
-        if (navButtons.classList.contains('active') && 
-            !navButtons.contains(e.target) && 
-            !hamburgerMenu.contains(e.target)) {
-            toggleMenu();
-        }
-    });
-}
 
-// ==================== INITIALIZATION ====================
+        if (navOverlay) {
+            navOverlay.addEventListener('click', closeMenu);
+        }
 
-// Main initialization function
-function initializeApp() {
-    createStars();
-    createParticles();
-    updateActiveNav();
-    initSmoothScrolling();
-    initAnimations();
-    initFloatingShapes();
-    initMobileMenu();
-    
+        // Close menu on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navButtons.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (navButtons.classList.contains('active') &&
+                !navButtons.contains(e.target) &&
+                !hamburgerMenu.contains(e.target)) {
+                closeMenu();
+            }
+        });
+    }
+
+    // ================================================================
+    // ===== STAR BACKGROUND =====
+    // ================================================================
+    const starsBg = document.getElementById('starsBg');
+    if (starsBg) {
+        starsBg.innerHTML = '';
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const sizes = ['star-small', 'star-medium', 'star-large'];
+            star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            starsBg.appendChild(star);
+        }
+    }
+
+    // ================================================================
+    // ===== GRAPHICS PAGE: FEATURED SLIDESHOW =====
+    // ================================================================
+    const slides = document.querySelectorAll('.slide');
+    const slideDots = document.querySelectorAll('.slide-dot');
+
+    if (slides.length > 0 && slideDots.length > 0) {
+        let currentSlide = 0;
+        let slideshowInterval;
+
+        function showSlide(n) {
+            slides.forEach(s => s.classList.remove('active'));
+            slideDots.forEach(d => d.classList.remove('active'));
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+            slideDots[currentSlide].classList.add('active');
+        }
+
+        function startSlideshow() {
+            if (slideshowInterval) clearInterval(slideshowInterval);
+            slideshowInterval = setInterval(() => showSlide(currentSlide + 1), 5000);
+        }
+
+        function stopSlideshow() {
+            clearInterval(slideshowInterval);
+        }
+
+        slideDots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                stopSlideshow();
+                showSlide(index);
+                startSlideshow();
+            });
+        });
+
+        const slideshowContainer = document.getElementById('featuredSlideshow');
+        if (slideshowContainer) {
+            slideshowContainer.addEventListener('mouseenter', stopSlideshow);
+            slideshowContainer.addEventListener('mouseleave', startSlideshow);
+        }
+
+        startSlideshow();
+    }
+
+    // ================================================================
+    // ===== GRAPHICS PAGE: GALLERY FILTERING =====
+    // ================================================================
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    if (tabBtns.length > 0 && galleryItems.length > 0) {
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const category = this.dataset.category;
+                galleryItems.forEach(item => {
+                    item.style.display = (category === 'all' || item.dataset.category === category) ?
+                        'block' : 'none';
+                });
+            });
+        });
+    }
+
+    // ================================================================
+    // ===== CONTACT PAGE: FORM =====
+    // ================================================================
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        initContactForm();
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                this.reset();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('🌸 Thank you for your message! I\'ll get back to you soon.');
+            }, 1500);
+        });
     }
-}
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeApp);
+    // ================================================================
+    // ===== WORK PAGE: SLIDESHOWS WITH LIGHTBOX =====
+    // ================================================================
+    const lightbox = document.getElementById('workLightbox');
+    const lightboxImage = document.getElementById('workLightboxImage');
+    const lightboxCaption = document.getElementById('workLightboxCaption');
+    const lightboxClose = document.getElementById('workLightboxClose');
 
-// Initialize floating shapes if DOM is already loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFloatingShapes);
-} else {
-    initFloatingShapes();
-}
+    function openLightbox(src, caption) {
+        if (!lightbox || !lightboxImage) return;
+        lightboxImage.src = src;
+        lightboxCaption.textContent = caption || 'Work Project';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    if (lightboxClose) {
+        lightboxClose.addEventListener('click', closeLightbox);
+    }
+    if (lightbox) {
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    // Initialize all work slideshows
+    document.querySelectorAll('.work-slideshow').forEach((slideshow) => {
+        const slides = slideshow.querySelectorAll('.slide-item');
+        const dots = slideshow.querySelectorAll('.slide-dot');
+        const prevBtn = slideshow.querySelector('.prev-btn');
+        const nextBtn = slideshow.querySelector('.next-btn');
+        const counter = slideshow.querySelector('.current-slide');
+        const totalSpan = slideshow.querySelector('.total-slides');
+
+        if (slides.length === 0) return;
+
+        let currentSlideIndex = 0;
+        const totalSlides = slides.length;
+
+        if (totalSpan) totalSpan.textContent = totalSlides;
+
+        function goToSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlideIndex);
+            });
+            if (counter) counter.textContent = currentSlideIndex + 1;
+        }
+
+        function nextSlide() { goToSlide(currentSlideIndex + 1); }
+        function prevSlide() { goToSlide(currentSlideIndex - 1); }
+
+        // Click on slide to open lightbox
+        slides.forEach((slide) => {
+            const img = slide.querySelector('img');
+            slide.addEventListener('click', function(e) {
+                if (e.target.closest('.slide-nav-btn') || e.target.closest('.slide-dot')) {
+                    return;
+                }
+                if (img && img.src && !img.src.includes('data:image')) {
+                    openLightbox(img.src, this.dataset.caption || 'Work Project');
+                } else {
+                    alert('📸 Image placeholder. Replace with your actual work image.');
+                }
+            });
+        });
+
+        // Auto-advance
+        let autoAdvance = setInterval(nextSlide, 4000);
+        slideshow.addEventListener('mouseenter', () => clearInterval(autoAdvance));
+        slideshow.addEventListener('mouseleave', () => {
+            autoAdvance = setInterval(nextSlide, 4000);
+        });
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                nextSlide();
+                clearInterval(autoAdvance);
+                autoAdvance = setInterval(nextSlide, 4000);
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                prevSlide();
+                clearInterval(autoAdvance);
+                autoAdvance = setInterval(nextSlide, 4000);
+            });
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', function(e) {
+                e.stopPropagation();
+                goToSlide(index);
+                clearInterval(autoAdvance);
+                autoAdvance = setInterval(nextSlide, 4000);
+            });
+        });
+
+        slideshow.setAttribute('tabindex', '0');
+    });
+
+    // ================================================================
+    // ===== GRAPHICS PAGE: FLIPBOOK =====
+    // ================================================================
+    const flipbookImages = [
+        { src: 'images/MiniEncyclopediaEvaNguyen.png', alt: 'Artwork 1' },
+        { src: 'images/MiniEncyclopediaEvaNguyen2.png', alt: 'Artwork 2' },
+        { src: 'images/MiniEncyclopediaEvaNguyen3.png', alt: 'Artwork 3' },
+        { src: 'images/MiniEncyclopediaEvaNguyen4.png', alt: 'Artwork 4' },
+        { src: 'images/MiniEncyclopediaEvaNguyen5.png', alt: 'Artwork 5' },
+        { src: 'images/MiniEncyclopediaEvaNguyen6.png', alt: 'Artwork 6' },
+        { src: 'images/MiniEncyclopediaEvaNguyen7.png', alt: 'Artwork 7' },
+        { src: 'images/MiniEncyclopediaEvaNguyen8.png', alt: 'Artwork 8' },
+        { src: 'images/MiniEncyclopediaEvaNguyen9.png', alt: 'Artwork 9' },
+        { src: 'images/MiniEncyclopediaEvaNguyen10.png', alt: 'Artwork 10' },
+        { src: 'images/MiniEncyclopediaEvaNguyen11.png', alt: 'Artwork 11' },
+        { src: 'images/MiniEncyclopediaEvaNguyen12.png', alt: 'Artwork 12' }
+    ];
+
+    const flipbook = document.getElementById('flipbook');
+    const flipPrev = document.getElementById('flipPrev');
+    const flipNext = document.getElementById('flipNext');
+    const flipCounter = document.getElementById('flipCounter');
+    const flipDotsContainer = document.getElementById('flipDots');
+
+    if (flipbook && flipPrev && flipNext) {
+        let currentSpread = 0;
+        const totalPages = flipbookImages.length;
+
+        function renderSpread(spreadIndex) {
+            const leftIndex = spreadIndex % totalPages;
+            const rightIndex = (spreadIndex + 1) % totalPages;
+
+            flipbook.innerHTML = '';
+
+            // Left Page
+            const leftPage = document.createElement('div');
+            leftPage.className = 'flipbook-page';
+            leftPage.style.cssText = 'position:absolute;left:0;top:0;z-index:2;transform-origin:right center;';
+            const leftImg = document.createElement('img');
+            leftImg.src = flipbookImages[leftIndex].src;
+            leftImg.alt = flipbookImages[leftIndex].alt || 'Page ' + (leftIndex + 1);
+            leftImg.onerror = function() {
+                leftPage.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;background:var(--gradient-primary);color:white;font-size:1.2rem;padding:20px;text-align:center;">📸 Page ${leftIndex + 1}<br><span style="font-size:0.8rem;opacity:0.7;">${flipbookImages[leftIndex].alt || ''}</span></div>`;
+            };
+            leftPage.appendChild(leftImg);
+
+            // Right Page
+            const rightPage = document.createElement('div');
+            rightPage.className = 'flipbook-page flipbook-page-back';
+            rightPage.style.cssText = 'position:absolute;right:0;top:0;z-index:1;transform-origin:left center;';
+            const rightImg = document.createElement('img');
+            rightImg.src = flipbookImages[rightIndex].src;
+            rightImg.alt = flipbookImages[rightIndex].alt || 'Page ' + (rightIndex + 1);
+            rightImg.onerror = function() {
+                rightPage.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;background:var(--gradient-secondary);color:white;font-size:1.2rem;padding:20px;text-align:center;">📸 Page ${rightIndex + 1}<br><span style="font-size:0.8rem;opacity:0.7;">${flipbookImages[rightIndex].alt || ''}</span></div>`;
+            };
+            rightPage.appendChild(rightImg);
+
+            flipbook.appendChild(leftPage);
+            flipbook.appendChild(rightPage);
+
+            if (flipCounter) {
+                flipCounter.textContent = `${leftIndex + 1}–${rightIndex + 1} / ${totalPages}`;
+            }
+
+            const dots = flipDotsContainer ? flipDotsContainer.querySelectorAll('.flipbook-dot') : [];
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === spreadIndex);
+            });
+        }
+
+        function buildDots() {
+            if (!flipDotsContainer) return;
+            flipDotsContainer.innerHTML = '';
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'flipbook-dot' + (i === 0 ? ' active' : '');
+                dot.dataset.index = i;
+                dot.addEventListener('click', function() {
+                    currentSpread = parseInt(this.dataset.index);
+                    renderSpread(currentSpread);
+                });
+                flipDotsContainer.appendChild(dot);
+            }
+        }
+
+        function nextSpread() {
+            currentSpread = (currentSpread + 1) % totalPages;
+            renderSpread(currentSpread);
+        }
+
+        function prevSpread() {
+            currentSpread = (currentSpread - 1 + totalPages) % totalPages;
+            renderSpread(currentSpread);
+        }
+
+        flipNext.addEventListener('click', nextSpread);
+        flipPrev.addEventListener('click', prevSpread);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') { e.preventDefault(); nextSpread(); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); prevSpread(); }
+        });
+
+        buildDots();
+        renderSpread(0);
+    }
+
+    // ================================================================
+    // ===== GRAPHICS PAGE: PNG SLIDE DECK VIEWER =====
+    // ================================================================
+    const pngItems = document.querySelectorAll('.slidedeck-item');
+    const pngOverlay = document.getElementById('pngFullscreen');
+    const pngImage = document.getElementById('pngImage');
+    const pngTitle = document.getElementById('pngTitle');
+    const pngDescription = document.getElementById('pngDescription');
+    const pngClose = document.getElementById('pngClose');
+    const pngScrollContainer = document.getElementById('pngScrollContainer');
+
+    if (pngOverlay && pngImage) {
+        const pngData = {
+            png1: {
+                title: 'Hayuri Matcha',
+                description: 'Branding Presentation - Scroll to view all slides',
+                image: 'images/Frame 10 (1).png'
+            },
+            png2: {
+                title: 'FlamAid',
+                description: 'Re-Branding Case Study - Scroll to view all slides',
+                image: 'images/FlamAid Rebrand.png'
+            }
+        };
+
+        function openPNG(pngId) {
+            const png = pngData[pngId];
+            if (!png) {
+                console.error('No PNG data found for:', pngId);
+                return;
+            }
+            pngImage.onerror = function() {
+                this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200"%3E%3Crect width="800" height="1200" fill="%23f0f0f0"/%3E%3Ctext x="400" y="600" font-family="sans-serif" font-size="40" fill="%23999" text-anchor="middle"%3EImage not found%3C/text%3E%3C/svg%3E';
+                pngDescription.textContent = 'Image not found. Please check the file path: ' + png.image;
+            };
+            pngImage.src = png.image;
+            pngImage.alt = png.title;
+            pngTitle.textContent = png.title;
+            pngDescription.textContent = png.description;
+
+            if (pngScrollContainer) pngScrollContainer.scrollTop = 0;
+            pngOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePNG() {
+            pngOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => { pngImage.src = ''; }, 300);
+        }
+
+        pngItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pngId = this.getAttribute('data-png');
+                if (pngId && pngData[pngId]) {
+                    openPNG(pngId);
+                } else {
+                    console.warn('No matching data for deck:', pngId);
+                }
+            });
+        });
+
+        if (pngClose) pngClose.addEventListener('click', closePNG);
+        pngOverlay.addEventListener('click', function(e) {
+            if (e.target === pngOverlay) closePNG();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && pngOverlay.classList.contains('active')) {
+                closePNG();
+            }
+        });
+    }
+
+    // ================================================================
+    // ===== GENERAL LIGHTBOX (for graphics gallery) =====
+    // ================================================================
+    function createGeneralLightbox() {
+        if (document.getElementById('lightboxOverlay')) return;
+
+        const overlay = document.createElement('div');
+        overlay.className = 'lightbox-overlay';
+        overlay.id = 'lightboxOverlay';
+        overlay.innerHTML = `
+            <div class="lightbox-content">
+                <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+                <img class="lightbox-image" id="lightboxImage" src="" alt="Full size image">
+                <div class="lightbox-info">
+                    <span class="lightbox-category" id="lightboxCategory">Category</span>
+                    <h3 id="lightboxTitle">Title</h3>
+                    <p id="lightboxDescription">Description</p>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const closeBtn = document.getElementById('lightboxClose');
+        const img = document.getElementById('lightboxImage');
+        const title = document.getElementById('lightboxTitle');
+        const category = document.getElementById('lightboxCategory');
+        const description = document.getElementById('lightboxDescription');
+
+        function closeLightbox() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+
+        // Attach click events to gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const imgEl = this.querySelector('.gallery-img');
+                if (!imgEl) return;
+                img.src = imgEl.src;
+                title.textContent = this.dataset.title || this.querySelector('h4')?.textContent || 'Image';
+                category.textContent = this.querySelector('.gallery-category')?.textContent || 'Category';
+                description.textContent = this.dataset.description || this.querySelector('p')?.textContent || '';
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Attach click events to slides
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.addEventListener('click', function() {
+                const imgEl = this.querySelector('.slide-img');
+                if (!imgEl) return;
+                img.src = imgEl.src;
+                title.textContent = this.dataset.title || this.querySelector('h3')?.textContent || 'Image';
+                category.textContent = this.querySelector('.gallery-category')?.textContent || 'Category';
+                description.textContent = this.dataset.description || this.querySelector('p')?.textContent || '';
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+    }
+
+    createGeneralLightbox();
+
+    // ================================================================
+    // ===== WORK PAGE: ANIMATE CARDS ON SCROLL =====
+    // ================================================================
+    const workCards = document.querySelectorAll('.work-card');
+    if (workCards.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 150);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        workCards.forEach((card) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(40px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    }
+
+    console.log('Portfolio loaded successfully!');
+    console.log('Designed by Eva Nguyen');
+});addEventListener
