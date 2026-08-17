@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eva Nguyen | Work Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600&family=Dancing+Script:wght@500;600;700&family=Itim&family=Indie+Flower&family=Gaegu:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ===== BACKGROUND ===== -->
+    <div class="fairy-bg">
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+    </div>
+    <div class="stars-bg" id="starsBg"></div>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <div class="work-lightbox-overlay" id="workLightbox">
+        <div class="work-lightbox-content">
+            <button class="work-lightbox-close" id="workLightboxClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img class="work-lightbox-image" id="workLightboxImage" src="" alt="Full size work image" />
+            <div class="work-lightbox-info">
+                <p id="workLightboxCaption">Work Project</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="nav-container">
+        <div class="nav-content">
+            <a href="home.html" class="logo">
+                <span class="logo-text" style="font-family: 'Gaegu', sans-serif; font-weight: 900; letter-spacing: -2px; line-height: 1;">Eva Nguyen</span>
+            </a>
+            <button class="hamburger-menu" id="hamburgerMenu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <div class="nav-buttons" id="navButtons">
+                <a href="home.html" class="nav-btn">Home</a>
+                <a href="about.html" class="nav-btn">About</a>
+                <a href="work.html" class="nav-btn active">Work</a>
+                <a href="projects.html" class="nav-btn">Projects</a>
+                <a href="graphics.html" class="nav-btn">Graphics</a>
+                <a href="contact.html" class="nav-btn">Contact</a>
+            </div>
+            <div class="nav-overlay" id="navOverlay"></div>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-container">
+
+        <!-- ===== WORK: HERO SECTION ===== -->
+        <section class="work-hero">
+            <h1 style="color: rgb(225, 118, 149); padding-top: 0px;">My Work Experience</h1>
+            <p class="tagline"><i style="font-size: 20px;">Internships • Work Studies • Startups</i></p>
+            <p>Explore my professional journey through design, technology, and creative innovation. Each role has shaped my skills and perspective as a designer.</p>
+        </section>
+
+        <!-- ===== WORK: TIMELINE ===== -->
+        <div class="work-timeline">
+
+            <!-- WORK CARD 1 -->
+            <div class="work-card">
+                <div class="work-content">
+                    <span class="work-badge internship"><i class="fas fa-briefcase"></i> Internship</span>
+                    <h2>UX/UI Intern</h2>
+                    <div class="work-company">FlamAid</div>
+                    <div class="work-date"><i class="fas fa-calendar-alt"></i> June 2026 - August 2026</div>
+                    <div class="work-location" style="padding-bottom: 20px;"><i style="color: rgb(225, 118, 149); margin-right: 5px;" class="fas fa-map-marker-alt"></i> Barcelona, Catalonia, Spain</div>
+                    <p class="work-description">I designed key UI components in Figma, including a new subscription page and improved mobile login, while leading a brand refresh with updated typography, colors, and assets. I collaborated with founders and developers to enhance the app's UI and applied the new identity to a complete website redesign. I also audited the site for errors, provided improvement feedback, and created visuals using Photoshop, Illustrator, and the 3D AI tool HiggsField for FlamAid product renders.</p>
+                    <div class="work-skills">
+                        <span>UI/UX Design</span>
+                        <span>Figma</span>
+                        <span>Prototyping</span>
+                        <span>Web Design</span>
+                        <span>Adobe Creative Suite</span>
+                        <span>Re-Branding</span>
+                        <span>Package Design</span>
+                        <span>CapCut</span>
+                        <span>AI</span>
+                    </div>
+                </div>
+                <div class="work-slideshow" id="slideshow1">
+                    <div class="slide-container">
+                        <div class="slide-item active" data-caption="FlamAid Team">
+                            <img src="images/Screenshot 2026-08-14 at 3.23.31 PM.png" alt="FlamAid" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-paint-brush\'></i><span>Brand Design</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-item" data-caption="Website Redesign on Figma">
+                            <img src="images/Screenshot 2026-08-14 at 2.56.37 PM.png" alt="Website" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-pencil-ruler\'></i><span>Marketing</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-item" data-caption="Website redesign project">
+                            <img src="images/Screenshot 2026-08-14 at 3.04.27 PM.png" alt="Official Website Update" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-magic\'></i><span>Web Design</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-counter"><span class="current-slide">1</span> / <span class="total-slides">3</span></div>
+                        <div class="slide-nav-buttons">
+                            <button class="slide-nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slide-nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="slide-dots-container">
+                        <button class="slide-dot active" data-index="0"></button>
+                        <button class="slide-dot" data-index="1"></button>
+                        <button class="slide-dot" data-index="2"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WORK CARD 2 -->
+            <div class="work-card">
+                <div class="work-content">
+                    <span class="work-badge internship"><i class="fas fa-briefcase"></i> Internship</span>
+                    <span class="work-badge workstudy"><i class="fas fa-graduation-cap"></i> Work Study</span>
+                    <h2>Graphic Design Intern</h2>
+                    <div class="work-company">Wisconsin School of Business - Multicultural Center</div>
+                    <div class="work-date"><i class="fas fa-calendar-alt"></i> August 2025 - May 2026</div>
+                    <div class="work-location" style="padding-bottom: 20px;"><i style="color: rgb(225, 118, 149); margin-right: 5px;" class="fas fa-map-marker-alt"></i> Madison, Wisconsin, USA</div>
+                    <p class="work-description">I designed marketing materials for events and center initiatives while helping to develop and execute creative strategies. I provided insights on current design and social media trends to better engage multicultural student communities. In addition to these creative duties, I helped staff the front desk and provided general operational support as needed. My role balanced visual design, strategic planning, and hands-on center assistance.</p>
+                    <div class="work-skills">
+                        <span>Graphic Design</span>
+                        <span>Canva</span>
+                        <span>Adobe Creative Suite</span>
+                        <span>Collaboration</span>
+                        <span>Communication</span>
+                    </div>
+                </div>
+                <div class="work-slideshow" id="slideshow2">
+                    <div class="slide-container">
+                        <div class="slide-item active" data-caption="MC Team">
+                            <img src="images/Screenshot%202026-08-14%20at%203.25.14%E2%80%AFPM.png" alt="MC Team" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-laptop\'></i><span>Media Lab</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-item" data-caption="Meet the Interns Project">
+                            <img src="images/Screenshot%202026-08-14%20at%203.46.45%E2%80%AFPM.png" alt="Meet the Interns Project" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-video\'></i><span>Video Editing</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-item" data-caption="Some Graphics done during Internship">
+                            <img src="images/Screenshot%202026-08-14%20at%204.29.03%E2%80%AFPM.png" alt="Some Graphics done during Internship" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-cube\'></i><span>3D Modeling</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-counter"><span class="current-slide">1</span> / <span class="total-slides">3</span></div>
+                        <div class="slide-nav-buttons">
+                            <button class="slide-nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slide-nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="slide-dots-container">
+                        <button class="slide-dot active" data-index="0"></button>
+                        <button class="slide-dot" data-index="1"></button>
+                        <button class="slide-dot" data-index="2"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WORK CARD 3 -->
+            <div class="work-card">
+                <div class="work-content">
+                    <span class="work-badge startup"><i class="fas fa-rocket"></i> Startup</span>
+                    <h2>UI Designer</h2>
+                    <div class="work-company">Nudge</div>
+                    <div class="work-date"><i class="fas fa-calendar-alt"></i> February 2026 - June 2026</div>
+                    <div class="work-location" style="padding-bottom: 20px;"><i style="color: rgb(225, 118, 149); margin-right: 5px;" class="fas fa-map-marker-alt"></i> Madison, Wisconsin, USA</div>
+                    <p class="work-description">I created app wireframing in Figma, collaborated with developers to improve accessibility for 235 test users, and researched user needs through wireframes and personas to boost engagement. I also applied cohesive branding with distinct colors and typography to set the app apart.</p>
+                    <div class="work-skills">
+                        <span>UI/UX Design</span>
+                        <span>Figma</span>
+                        <span>Wireframing</span>
+                        <span>User Research</span>
+                        <span>Brand Identity</span>
+                        <span>Startup Strategy</span>
+                    </div>
+                </div>
+                <div class="work-slideshow" id="slideshow3">
+                    <div class="slide-container">
+                        <div class="slide-item active" data-caption="Process on Improving Screen Usability">
+                            <img src="images/Screenshot%202026-08-14%20at%204.59.03%E2%80%AFPM.png" alt="App concept" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-mobile-alt\'></i><span>App Concept</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-item" data-caption="Wireframe designs on Figma">
+                            <img src="images/Screenshot%202026-08-14%20at%204.57.47%E2%80%AFPM.png" alt="User flows" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-heart\'></i><span>User Flows</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-item" data-caption="Branding the Startups Social Presences">
+                            <img src="images/Screenshot%202026-08-14%20at%204.53.01%E2%80%AFPM.png" alt="High-fidelity prototype" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-star\'></i><span>Prototype</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-counter"><span class="current-slide">1</span> / <span class="total-slides">3</span></div>
+                        <div class="slide-nav-buttons">
+                            <button class="slide-nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slide-nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="slide-dots-container">
+                        <button class="slide-dot active" data-index="0"></button>
+                        <button class="slide-dot" data-index="1"></button>
+                        <button class="slide-dot" data-index="2"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WORK CARD 4 -->
+            <div class="work-card">
+                <div class="work-content">
+                    <span class="work-badge workstudy"><i class="fas fa-graduation-cap"></i> Work Study</span>
+                    <h2>Communications & Graphic Design Student Leader</h2>
+                    <div class="work-company">Center for Educational Opportunity</div>
+                    <div class="work-date"><i class="fas fa-calendar-alt"></i> August 2024 - June 2025</div>
+                    <div class="work-location" style="padding-bottom: 20px;"><i style="color: rgb(225, 118, 149); margin-right: 5px;" class="fas fa-map-marker-alt"></i> Madison, Wisconsin, USA</div>
+                    <p class="work-description">Designed marketing collateral including email newsletters, social media graphics, and print materials for sustainability-focused brands. Collaborated with the content team to create visual storytelling that increased client engagement by 28%. Developed automated email design templates that streamlined the team's workflow.</p>
+                    <div class="work-skills">
+                        <span>Canva</span>
+                        <span>Adobe Illustrator</span>
+                        <span>Flyer Design</span>
+                        <span>Email</span>
+                        <span>Social Media</span>
+                    </div>
+                </div>
+                <div class="work-slideshow" id="slideshow4">
+                    <div class="slide-container">
+                        <div class="slide-item active" data-caption="Student Leaders">
+                            <img src="images/IMG_3690.jpg" alt="Student Leaders" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-envelope\'></i><span>Email Design</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-item" data-caption="Social Media Graphics">
+                            <img src="images/Screenshot%202026-08-14%20at%206.16.52%E2%80%AFPM.png" alt="Social Media Graphics" onerror="this.parentElement.innerHTML='<div class=\'slide-placeholder\'><i class=\'fas fa-leaf\'></i><span>Social Media</span></div>'">
+                            <div class="slide-click-overlay"><i class="fas fa-expand"></i></div>
+                        </div>
+                        <div class="slide-counter"><span class="current-slide">1</span> / <span class="total-slides">2</span></div>
+                        <div class="slide-nav-buttons">
+                            <button class="slide-nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slide-nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="slide-dots-container">
+                        <button class="slide-dot active" data-index="0"></button>
+                        <button class="slide-dot" data-index="1"></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
