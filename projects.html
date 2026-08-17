@@ -1,1021 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UI/UX Projects | Eva Nguyen</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Projects specific styles - No animations */
-        .projects-hero {
-            text-align: center;
-            padding: var(--space-xxl) 0;
-            position: relative;
-            z-index: 1;
-            min-height: 70vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .projects-title {
-            font-size: 3rem;
-            background: var(--gradient-sunset);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: var(--space-md);
-        }
-        
-        .tagline {
-            font-size: 1.5rem;
-            color: var(--purple-dark);
-            margin-bottom: var(--space-lg);
-            font-family: var(--font-cursive);
-            text-align: center;
-            display: block;
-            width: 100%;
-        }
-        
-        .projects-hero p {
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: var(--font-size-md);
-            color: var(--text);
-            line-height: 1.8;
-        }
-        
-        .project-details {
-            background: var(--white-transparent);
-            border-radius: var(--border-radius-large);
-            padding: var(--space-xl);
-            margin-bottom: var(--space-xl);
-            box-shadow: var(--shadow-soft);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.13);
-        }
-        
-        .project-header {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: var(--space-xl);
-            margin-bottom: var(--space-xl);
-        }
-        
-        @media (max-width: 768px) {
-            .project-header {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .project-info h2 {
-            color: var(--purple-dark);
-            font-size: 2.5rem;
-            margin-bottom: var(--space-md);
-        }
-        
-        .project-meta {
-            display: flex;
-            gap: var(--space-xl);
-            margin-top: var(--space-lg);
-            flex-wrap: wrap;
-        }
-        
-        .meta-item {
-            background: var(--pink-dream);
-            padding: var(--space-md);
-            border-radius: 15px;
-            min-width: 150px;
-        }
-        
-        .meta-item h4 {
-            color: var(--pink-dark);
-            margin-bottom: var(--space-xs);
-            font-size: var(--font-size-sm);
-        }
-        
-        .meta-item p {
-            color: var(--text);
-            font-weight: 600;
-        }
-        
-        /* REAL IPHONE-SIZED MOCKUPS */
-        /* iPhone 16/16 Pro: 6.1" display (147.5mm x 71.5mm, 19.5:9 aspect ratio) */
-        .phone-images-container {
-            margin: var(--space-xl) 0;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            gap: var(--space-xl);
-            flex-wrap: wrap;
-        }
-        
-        .phone-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .phone-image-wrapper {
-            position: relative;
-            width: 219px; /* Approx. iPhone 16 Pro width scaled */
-            height: 455px; /* iPhone 16 Pro height (300 * 2.06 = 618) - 19.5:9 aspect ratio */
-            background: #1d1d1f; /* iPhone dark color */
-            border-radius: 27px; /* iPhone rounded corners */
-            overflow: hidden;
-            box-shadow: 
-                0 3px 16px rgba(51, 4, 69, 0.42),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-                inset 0 0 0 2px rgba(0, 0, 0, 0.2);
-            border: 4px solid #1d1d1f;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .phone-image-wrapper:hover {
-            transform: translateY(-8px);
-            box-shadow: 
-                22 7px 19px rgba(109, 40, 178, 0.24),
-                inset 0 0 0 3px rgba(49, 13, 98, 0.45),
-                inset 0 0 0 2px rgba(58, 5, 119, 0.64);
-        }
-        
-        .phone-screen {
-            width: 98%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 22px; /* Slightly smaller than phone body */
-        }
-        
-        
-        .phone-image-wrapper:hover .image-caption {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* iPhone Dynamic Island (modern iPhone notch) */
-        .dynamic-island {
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 76px;
-            height: 10px;
-            background: #1d1d1f;
-            border-radius: 14px;
-            z-index: 10;
-            box-shadow: 0 0 -1px rgba(22, 14, 82, 0.5);
-        }
-        
-        /* iPhone side buttons */
-        .volume-button {
-            position: absolute;
-            right: -8px;
-            top: 120px;
-            width: 4px;
-            height: 60px;
-            background: #1d1d1f;
-            border-radius: 2px;
-            box-shadow: 
-                inset 0 0 2px rgba(255, 255, 255, 0.1),
-                0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        .power-button {
-            position: absolute;
-            right: -8px;
-            top: 220px;
-            width: 4px;
-            height: 40px;
-            background: #1d1d1f;
-            border-radius: 2px;
-            box-shadow: 
-                inset 0 0 2px rgba(255, 255, 255, 0.1),
-                0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Phone labels for each image */
-        .phone-label {
-            text-align: center;
-            margin-top: var(--space-md);
-            color: var(--purple-dark);
-            font-weight: 500;
-            font-size: 1.2rem;
-            background: var(--white-transparent);
-            padding: 10px 20px;
-            border-radius: 23px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-soft);
-        }
-        
-        /* Responsive adjustments - KEEP SAME SIZE ON ALL DEVICES */
-        @media (max-width: 1200px) {
-            .phone-images-container {
-                gap: var(--space-lg);
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .phone-images-container {
-                gap: var(--space-md);
-            }
-            
-            .phone-image-wrapper {
-                width: 280px;
-                height: 577px; /* Maintain 19.5:9 aspect ratio */
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .phone-images-container {
-                flex-direction: column;
-                gap: var(--space-xl);
-            }
-            
-            .phone-image-wrapper {
-                width: 300px; /* Same size as desktop */
-                height: 619px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .phone-image-wrapper {
-                width: 280px;
-                height: 577px;
-            }
-        }
-        
-        @media (max-width: 400px) {
-            .phone-image-wrapper {
-                width: 260px;
-                height: 536px;
-            }
-        }
-        
-        .process-timeline {
-            position: relative;
-            padding-left: var(--space-xl);
-            margin: var(--space-xl) 0;
-        }
-        
-        .process-timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient-dream);
-        }
-        
-        .process-step {
-            position: relative;
-            margin-bottom: var(--space-xl);
-            padding: var(--space-lg);
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-        }
-        
-        .process-step::before {
-            content: '';
-            position: absolute;
-            left: -36px;
-            top: var(--space-lg);
-            width: 20px;
-            height: 20px;
-            background: var(--gradient-dream);
-            border-radius: 50%;
-            border: 4px solid var(--white);
-            box-shadow: var(--glow-pink);
-        }
-        
-        .step-number {
-            position: absolute;
-            left: -42px;
-            top: var(--space-lg);
-            width: 32px;
-            height: 32px;
-            background: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--purple-dark);
-            font-weight: 600;
-            font-size: var(--font-size-sm);
-            z-index: 2;
-        }
-        
-        .process-step h4 {
-            color: var(--purple-dark);
-            margin-bottom: var(--space-sm);
-            font-size: var(--font-size-lg);
-        }
-        
-        .ui-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-md);
-            margin: var(--space-xl) 0;
-        }
-        
-        .ui-element {
-            background: var(--white);
-            border-radius: 15px;
-            padding: var(--space-md);
-            text-align: center;
-            box-shadow: var(--shadow-soft);
-            transition: all 0.3s ease;
-        }
-        
-        .ui-element:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
-        }
-        
-        .ui-element i {
-            font-size: 2rem;
-            color: var(--purple-dark);
-            margin-bottom: var(--space-sm);
-        }
-        
-        .color-palette {
-            display: flex;
-            gap: var(--space-sm);
-            margin: var(--space-lg) 0;
-        }
-        
-        .color-item {
-            flex: 1;
-            height: 60px;
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .color-item::after {
-            content: attr(data-color);
-            position: absolute;
-            bottom: 5px;
-            left: 5px;
-            right: 5px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
-        
-        /* Hamburger Menu Styles */
-        .hamburger-menu {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 24px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 10002 !important;
-            position: relative;
-        }
-        
-        .hamburger-line {
-            width: 100%;
-            height: 3px;
-            background: var(--text);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-        
-        .hamburger-menu.active .hamburger-line:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        
-        .hamburger-menu.active .hamburger-line:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .hamburger-menu.active .hamburger-line:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-        
-        /* Fix for mobile navigation */
-        @media (max-width: 768px) {
-            .hamburger-menu {
-                display: flex;
-            }
-            
-            .nav-buttons {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 80px 30px 30px;
-                gap: var(--space-md);
-                transition: right 0.3s ease;
-                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
-                border-left: 1px solid rgba(157, 78, 221, 0.3);
-                z-index: 10001 !important;
-            }
-            
-            .nav-buttons.active {
-                right: 0;
-            }
-            
-            /* Nav overlay for mobile */
-            .nav-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(5px);
-                z-index: 10000 !important;
-                display: none;
-            }
-            
-            .nav-overlay.active {
-                display: block;
-            }
-            
-            .nav-container {
-                z-index: 10003 !important;
-            }
-            
-            /* Make sure all content stays below nav */
-            .main-container,
-            .projects-hero,
-            .featured-project,
-            .project-details,
-            .project-header,
-            .design-process,
-            .key-features {
-                z-index: 1 !important;
-            }
-            
-            /* Mobile adjustments */
-            .projects-title {
-                font-size: 2.5rem;
-            }
-            
-            .tagline {
-                font-size: 1.3rem;
-            }
-        }
-
-        /* Image frame for process images */
-        .image-frame {
-            margin-top: var(--space-md);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
-            background: var(--white);
-            display: inline-block;
-            width: 100%;
-            max-width: 500px;
-        }
-        .image-frame img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .prototype-link {
-            text-align: center;
-            margin-top: var(--space-xl);
-        }
-        .prototype-link a {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--gradient-dream);
-            color: white;
-            padding: 12px 28px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: transform 0.2s;
-        }
-        .prototype-link a:hover {
-            transform: translateY(-3px);
-        }
-
-        .key-features {
-            margin-top: var(--space-xl);
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-lg);
-            margin-top: var(--space-lg);
-        }
-        .feature-card {
-            background: var(--white);
-            padding: var(--space-lg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-soft);
-            transition: all 0.3s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-medium);
-        }
-        .feature-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-dream);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: var(--space-md);
-        }
-        .feature-icon i {
-            color: white;
-            font-size: 1.2rem;
-        }
-        .feature-card h4 {
-            color: var(--purple-dark);
-            margin-bottom: var(--space-sm);
-        }
-        .feature-card p {
-            color: var(--text);
-            line-height: 1.6;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eva Nguyen | Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600&family=Dancing+Script:wght@500;600;700&family=Itim&family=Indie+Flower&family=Gaegu:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- Animated Cloud Background -->
-    <div class="cloud-bg">
-        <div class="cloud cloud-large"></div>
-        <div class="cloud cloud-medium"></div>
-        <div class="cloud cloud-small"></div>
-    </div>
 
-    <!-- Twinkling Stars -->
+    <!-- ===== BACKGROUND ===== -->
+    <div class="fairy-bg">
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+        <div class="fairy-particle"></div>
+    </div>
     <div class="stars-bg" id="starsBg"></div>
 
-    <!-- Navigation - Hamburger menu for mobile -->
+    <!-- ===== NAVIGATION ===== -->
     <nav class="nav-container">
         <div class="nav-content">
-            <a href="index.html" class="logo">
-                <span class="logo-text">Eva Nguyen</span>
+            <a href="home.html" class="logo">
+                <span class="logo-text" style="font-family: 'Gaegu', sans-serif; font-weight: 900; letter-spacing: -2px; line-height: 1;">Eva Nguyen</span>
             </a>
-            
-            <!-- Hamburger menu button (visible on mobile) -->
             <button class="hamburger-menu" id="hamburgerMenu">
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
                 <span class="hamburger-line"></span>
             </button>
-            
-            <!-- Navigation buttons (hidden on mobile by default) -->
             <div class="nav-buttons" id="navButtons">
-                <a href="index.html" class="nav-btn">Home</a>
+                <a href="home.html" class="nav-btn">Home</a>
                 <a href="about.html" class="nav-btn">About</a>
-                <a href="graphics.html" class="nav-btn">Graphics</a>
+                <a href="work.html" class="nav-btn">Work</a>
                 <a href="projects.html" class="nav-btn active">Projects</a>
-                <a href="contacts.html" class="nav-btn">Contact</a>
+                <a href="graphics.html" class="nav-btn">Graphics</a>
+                <a href="contact.html" class="nav-btn">Contact</a>
             </div>
-            
-            <!-- Mobile menu overlay -->
             <div class="nav-overlay" id="navOverlay"></div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Projects Hero -->
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-container">
+
+        <!-- ===== PROJECTS: HERO SECTION ===== -->
         <section class="projects-hero">
-            <div class="projects-title-container">
-                <h1 class="projects-title">UI/UX Project</h1>
-            </div>
-            <p class="tagline">Discover the design process behind my digital creations</p>
-            <p>The project below showcases my approach to user-centered design, from initial research to final implementation. I believe in creating experiences that are both beautiful and functional. I am beginning my UX/UI journey so be on the look out for more projects to come!</p>
+            <h1 class="projects-title">UI/UX Projects</h1>
+            <p class="tagline" style="color:var(--green-dark); font-family: 'Indie Flower', sans-serif; font-size: 18px;"><i style="font-size: 20px;">Discover the design process behind my digital creations</i></p>
+            <p style="max-width:700px; margin:0 auto; line-height:1.8;">The projects below showcase my approach to user-centered design, from initial research to final implementation. I believe in creating experiences that are both beautiful and functional.</p>
         </section>
 
-
-            <div class="project-details">
-                <div class="project-header">
-                    <div class="project-info">
-                        <span class="project-badge" style="display: inline-block; margin-bottom: var(--space-md); padding: 8px 16px; background: var(--gradient-dream); color: white; border-radius: 20px; font-weight: 500; font-size: var(--font-size-sm);">Case Study (Team Project)</span>
-                        <h2>Smart Pantry</h2>
-                        <p>
-Smart Pantry is a mobile app designed to help college students manage groceries, reduce food waste, and simplify meal planning. Based on research into student cooking habits, we found that busy schedules and shared living spaces often lead to forgotten ingredients, expired food, and wasted money. Smart Pantry solves this by tracking pantry items, suggesting recipes from available ingredients, and sending expiration reminders.
-</p>
-                         
-                        <div class="project-meta">
-                            <div class="meta-item">
-                                <h4>Timeline</h4>
-                                <p>2 Months</p>
-                            </div>
-                            <div class="meta-item">
-                                <h4>Platform</h4>
-                                <p>Mobile Phone</p>
-                            </div>
-                            <div class="meta-item">
-                                <h4>Tools</h4>
-                                <p>Figma</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- FIVE IPHONE MOCKUPS IN HORIZONTAL ROW (including Saved Meals Screen) -->
-                <div class="phone-images-container">
-                    <!-- iPhone 1: Login Screen -->
-                    <div class="phone-item">
-                        <div class="phone-image-wrapper">
-                            <div class="dynamic-island"></div>
-                            <div class="volume-button"></div>
-                            <div class="power-button"></div>
-                            <img src="images/Untitled%20(36).png" alt="Smart Pantry Sign In" class="phone-screen">
-                            <div class="image-caption">Smart Pantry sign in</div>
-                        </div>
-                        <div class="phone-label">Login Screen</div>
-                    </div>
-                    
-                    <!-- iPhone 2: Your Fridge Screen -->
-                    <div class="phone-item">
-                        <div class="phone-image-wrapper">
-                            <div class="dynamic-island"></div>
-                            <div class="volume-button"></div>
-                            <div class="power-button"></div>
-                            <img src="images/Untitled%20(37).png" alt="Your Fridge" class="phone-screen">
-                        </div>
-                        <div class="phone-label">Your Fridge Screen</div>
-                    </div>
-                    
-                    <!-- iPhone 3: Barcode/Recipe Scanner -->
-                    <div class="phone-item">
-                        <div class="phone-image-wrapper">
-                            <div class="dynamic-island"></div>
-                            <div class="volume-button"></div>
-                            <div class="power-button"></div>
-                            <img src="images/Untitled%20(38).png" alt="Food Scanner" class="phone-screen">
-                        </div>
-                        <div class="phone-label">Barcode/Recipe Scanner</div>
-                    </div>
-                    
-                    <!-- iPhone 4: Saved Meals Screen (horizontal alignment) -->
-                    <div class="phone-item">
-                        <div class="phone-image-wrapper">
-                            <div class="dynamic-island"></div>
-                            <div class="volume-button"></div>
-                            <div class="power-button"></div>
-                            <img src="images/Untitled%20(39).png" alt="Saved Meals" class="phone-screen">
-                        </div>
-                        <div class="phone-label">Saved Meals Screen</div>
-                    </div>
-
-                    <!-- iPhone 5: Added Ingredients Screen -->
-                    <div class="phone-item">
-                        <div class="phone-image-wrapper">
-                            <div class="dynamic-island"></div>
-                            <div class="volume-button"></div>
-                            <div class="power-button"></div>
-                            <img src="images/Untitled%20(40).png" alt="Added Ingredients" class="phone-screen">
-                        </div>
-                        <div class="phone-label">Added Ingredients Screen</div>
-                    </div>
-                </div>
-                
-                <!-- Design Process -->
-                <div class="design-process">
-                    <h3 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-lg); text-align: center;">My Design Process</h3>
-                    
-                    <div class="process-timeline">
-                        <!-- Step 1 -->
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <h4>Research & Discovery</h4>
-                            <p>The process began with observing college students in their shared apartment kitchens to better understand how they prepare meals in real-life environments. Through these observations, I analyzed cooking behaviors, multitasking habits, and the challenges created by limited space, shared appliances, and busy schedules. This research uncovered key pain points such as forgotten groceries, poor meal planning, expired food, and unnecessary spending, which shaped the foundation of the project.</p>
-                        </div>
-                        
-                       <div class="process-step">
-                            <div class="step-number">2</div>
-                            <h4>Storyboarding & Behavioral Observation</h4>
-                            <p>To better understand real cooking behaviors, we observed our college student roommates as they prepared and cooked a meal in a shared apartment kitchen. Rather than following strict recipes, they cooked informally, relying on memory, multitasking between prepping and cooking, and adapting to shared spaces and limited kitchen resources. This experiment helped us identify common pain points such as forgetting ingredients, poor grocery awareness, and inefficient meal planning.
-                            After the observation, we translated these experiences into storyboards using sticky notes to map out each step of the cooking process, from gathering ingredients to cleaning up. By comparing each roommate's process side by side, we identified patterns and similarities in their behaviors, frustrations, and decision-making. This helped us uncover repeated challenges and better define opportunities for SmartPantry to support students through smarter pantry tracking, meal suggestions, and expiration management.</p>
-                            
-                            <div class="image-frame">
-                                <img src="images/Untitled%20(35).png" alt="Storyboarding process">
-                            </div>
-                        </div>
-                        
-                        <!-- Step 3 -->
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <h4>Wireframing & Prototyping</h4>
-                            <p>With a clear understanding of the user experience, I created low-fidelity wireframes to establish the app's layout, information hierarchy, and navigation flow. These wireframes helped visualize how users would move through the app and interact with its features. Interactive prototypes were then built to test usability, functionality, and overall flow before moving into final design.</p>
-             
-                            <div class="image-frame">
-                                <img src="images/Untitled%20(34).png" alt="Wireframe example">
-                            </div>               
-                            <div class="image-frame">
-                                <img src="images/Untitled%20(33).png" alt="Wireframe example 2">
-                            </div>
-                            <div class="image-frame">
-                                <img src="images/Untitled%20(32).png" alt="Wireframe example 3">
-                            </div>
-                        </div>
-                        
-                        <!-- Step 4 -->
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <h4>Visual Design System</h4>
-                            <p>The visual design focused on creating a clean, modern, and approachable interface that feels simple and easy to use. Since students often cook in fast-paced, unstructured environments, the design prioritizes clarity, quick access to information, and minimal friction. Strong visual hierarchy, organized layouts, and intuitive interactions were used to make pantry management feel seamless and efficient.</p>
-                            
-                            <!-- Color Palette -->
-                            <div class="color-palette">
-                                <div class="color-item" style="background: #A1D2DF;" data-color="#A1D2DF"></div>
-                                <div class="color-item" style="background: #F4F1F3;" data-color="#F4F1F3"></div>
-                                <div class="color-item" style="background: #D9F2FA;" data-color="#D9F2FA"></div>
-                                <div class="color-item" style="background: #4E535C;" data-color="#4E535C"></div>
-                                <div class="color-item" style="background: #000000;" data-color="#000000"></div>
-                            </div>
-                            <div class="image-frame">
-                                <img src="images/Untitled%20(31).png" alt="Design system">
-                            </div>
-                        </div>
-                        
-                        <!-- Step 5 -->
-                        <div class="process-step">
-                            <div class="step-number">5</div>
-                            <h4>Testing & Iteration</h4>
-                            <p>Once the prototype was developed, I conducted usability testing to evaluate how effectively users could navigate the app and complete tasks such as logging ingredients, checking expiration dates, and finding recipes. Feedback highlighted areas for improvement, which led to multiple design iterations focused on simplifying navigation, improving feature clarity, and making the overall experience faster and more intuitive.</p>
-                        </div>
-                    </div>
-                    <div class="prototype-link">
-                        <a href="https://www.figma.com/proto/633tnAHxpADO1PF3FeGPhs/A8---WIreframes?node-id=146-158&p=f&t=IhoabyF6siIy8N2l-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=152%3A115" target="_blank" rel="noopener noreferrer">
-                            <i class="fas fa-external-link-alt"></i> View Interactive Prototype
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Key Features -->
-                <div class="key-features">
-                    <h3 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-lg); text-align: center;">Key Features</h3>
-                    
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-moon"></i>
-                            </div>
-                            <h4>Pantry Tracking</h4>
-                            <p>Users can log and monitor the ingredients they currently have in their fridge and pantry, making it easier to keep track of groceries and avoid duplicate purchases.</p>
-                        </div>
-                        
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-chart-pie"></i>
-                            </div>
-                            <h4>Recipe Recommendations</h4>
-                            <p>The app suggests meal ideas based on available ingredients, helping users quickly decide what to cook without needing to search for recipes or buy extra items.</p>
-                        </div>
-                        
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-cloud-moon"></i>
-                            </div>
-                            <h4>Expiration Reminders</h4>
-                            <p>Smart notifications alert users when ingredients are close to expiring, encouraging them to use food on time, reduce waste, and save money.</p>
-                        </div>
+        <!-- ===== SMART PANTRY PROJECT ===== -->
+        <div class="project-details">
+            <div class="project-header">
+                <div class="project-info">
+                    <span class="project-badge">Case Study (Team Project)</span>
+                    <h2>Smart Pantry</h2>
+                    <p>Smart Pantry is a mobile app designed to help college students manage groceries, reduce food waste, and simplify meal planning. Based on research into student cooking habits, we found that busy schedules and shared living spaces often lead to forgotten ingredients, expired food, and wasted money.</p>
+                    <div class="project-meta">
+                        <div class="meta-item"><h4>Timeline</h4><p>2 Months</p></div>
+                        <div class="meta-item"><h4>Platform</h4><p>Mobile Phone</p></div>
+                        <div class="meta-item"><h4>Tools</h4><p>Figma</p></div>
                     </div>
                 </div>
             </div>
-        
-        
-        <!-- Featured Project -->
-        <section class="featured-project" id="dream-journal">
-            <div class="project-details">
-                <div class="project-header">
-                    <div class="project-info">
-                        <span class="project-badge" style="display: inline-block; margin-bottom: var(--space-md); padding: 8px 16px; background: var(--gradient-dream); color: white; border-radius: 20px; font-weight: 500; font-size: var(--font-size-sm);">Case Study</span>
-                        <h2>Mood Meals</h2>
-                        <p>A mobile application I designed to track a user's mood each day, which will determine the types of personalized meals they are suggested to have that day.</p>
-                        
-                        <div class="project-meta">
-                            <div class="meta-item">
-                                <h4>Timeline</h4>
-                                <p>2 Months</p>
-                            </div>
-                            <div class="meta-item">
-                                <h4>Platform</h4>
-                                <p>Mobile Phone</p>
-                            </div>
-                            <div class="meta-item">
-                                <h4>Tools</h4>
-                                <p>Figma</p>
-                            </div>
+
+            <div class="phone-images-container">
+                <div class="phone-item">
+                    <div class="phone-image-wrapper">
+                        <div class="dynamic-island"></div>
+                        <img src="images/screenshot-2026-05-04-at-6-59-54-pm.png" alt="Login" class="phone-screen">
+                    </div>
+                    <div class="phone-label">Login Screen</div>
+                </div>
+                <div class="phone-item">
+                    <div class="phone-image-wrapper">
+                        <div class="dynamic-island"></div>
+                        <img src="images/screenshot-2026-05-04-at-6-17-23-pm.png" alt="Fridge" class="phone-screen">
+                    </div>
+                    <div class="phone-label">Your Fridge Screen</div>
+                </div>
+                <div class="phone-item">
+                    <div class="phone-image-wrapper">
+                        <div class="dynamic-island"></div>
+                        <img src="images/screenshot-2026-05-04-at-6-34-10-pm.png" alt="Scanner" class="phone-screen">
+                    </div>
+                    <div class="phone-label">Barcode Scanner</div>
+                </div>
+                <div class="phone-item">
+                    <div class="phone-image-wrapper">
+                        <div class="dynamic-island"></div>
+                        <img src="images/screenshot-2026-05-04-at-6-29-53-pm.png" alt="Added Ingredients" class="phone-screen">
+                    </div>
+                    <div class="phone-label">Saved Meals Screen</div>
+                </div>
+                <div class="phone-item">
+                    <div class="phone-image-wrapper">
+                        <div class="dynamic-island"></div>
+                        <img src="images/screenshot-2026-08-16-at-11-38-26-pm.png" alt="Added Ingredients" class="phone-screen">
+                    </div>
+                    <div class="phone-label">Added Ingredients Screen</div>
+                </div>
+            </div>
+
+            <div class="design-process">
+                <h3 style="color:var(--green-dark); font-size: 25px; text-align:center; margin-bottom:var(--space-lg);">My Design Process</h3>
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4>Research & Discovery</h4>
+                        <p>The process began with observing college students in their shared apartment kitchens to better understand how they prepare meals in real-life environments. This research uncovered key pain points such as forgotten groceries, poor meal planning, expired food, and unnecessary spending.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4>Storyboarding & Behavioral Observation</h4>
+                        <p>We observed students as they cooked in a shared apartment kitchen, identifying patterns in their behaviors, frustrations, and decision-making. This helped us better define opportunities for SmartPantry.</p>
+                        <div class="image-frame"><img src="images/untitled-35-1.png" alt="Storyboard"></div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4>Wireframing & Prototyping</h4>
+                        <p>Low-fidelity wireframes were created to establish layout, information hierarchy, and navigation flow before moving into final design.</p>
+                        <div class="image-frame"><img src="images/untitled-34.png" alt="Wireframe"><img src="images/untitled-33.png" alt="Wireframe"><img src="images/untitled-32-1.png" alt="Wireframe"></div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h4>Visual Design System</h4>
+                        <p>A clean, modern interface that prioritizes clarity and quick access to information, making pantry management feel seamless.</p>
+                        <div class="color-palette">
+                            <div class="color-item" style="background:#A1D2DF;" data-color="#A1D2DF"></div>
+                            <div class="color-item" style="background:#F4F1F3;" data-color="#F4F1F3"></div>
+                            <div class="color-item" style="background:#D9F2FA;" data-color="#D9F2FA"></div>
+                            <div class="color-item" style="background:#4E535C;" data-color="#4E535C"></div>
+                            <div class="color-item" style="background:#000000;" data-color="#000000"></div>
                         </div>
+                        <div class="image-frame"><img src="images/untitled-31.png" alt="Wireframe"></div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <h4>Testing & Iteration</h4>
+                        <p>Usability testing was conducted to evaluate navigation and task completion, leading to multiple design iterations for improvement.</p>
                     </div>
                 </div>
-                
-                <!-- THREE IPHONE MOCKUPS IN ONE ROW -->
-                <div class="phone-images-container">
-                    <!-- iPhone 1 -->
-                    <div class="phone-item">
-                        <div class="phone-image-wrapper">
-                            <div class="dynamic-island"></div>
-                            <div class="volume-button"></div>
-                            <div class="power-button"></div>
-                            <img src="1x/Artboard%202.png" alt="Mood Meals Sign In" class="phone-screen">
-                            <div class="image-caption">Mood Meals sign in</div>
-                        </div>
-                        <div class="phone-label">Sign In Screen</div>
-                    </div>
-                    
-                    <!-- iPhone 2 -->
-                    <div class="phone-item">
-                        <div class="phone-image-wrapper">
-                            <div class="dynamic-island"></div>
-                            <div class="volume-button"></div>
-                            <div class="power-button"></div>
-                            <img src="1x/Artboard%203.png" alt="Meal Planning Screen" class="phone-screen">
-                            <div class="image-caption">Mood tracking survey</div>
-                        </div>
-                        <div class="phone-label">Mood Survey Screen</div>
-                    </div>
-                    
-                    <!-- iPhone 3 -->
-                    <div class="phone-item">
-                        <div class="phone-image-wrapper">
-                            <div class="dynamic-island"></div>
-                            <div class="volume-button"></div>
-                            <div class="power-button"></div>
-                            <img src="1x/Artboard%205.png" alt="Recipe Details" class="phone-screen">
-                            <div class="image-caption">Starred meals and recipe suggestions</div>
-                        </div>
-                        <div class="phone-label">Starred Meals Screen</div>
-                    </div>
+                <div class="prototype-link">
+                    <a href="https://www.figma.com/proto/633tnAHxpADO1PF3FeGPhs/A8---WIreframes?node-id=146-158&amp;p=f&amp;t=IhoabyF6siIy8N2l-1&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;starting-point-node-id=152%3A115" target="_blank" rel="noopener">
+                        <i class="fas fa-external-link-alt"></i> View Interactive Prototype
+                    </a>
                 </div>
-                
-                <!-- Design Process -->
-                <div class="design-process">
-                    <h3 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-lg); text-align: center;">My Design Process</h3>
-                    
-                    <div class="process-timeline">
-                        <!-- Step 1 -->
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <h4>Research & Discovery</h4>
-                            <p>I conducted interviews with 20 potential users to understand their diet habits. Key insights revealed that people wanted simple recipes that they can make easily each day or even meals that can eat throughout the week.</p>
-                        </div>
-                        
-                        <!-- Step 2 -->
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <h4>User Personas & Journey</h4>
-                            <p>Created a primary user persona which was a typical college student who lives on campus, and they struggle with cooking daily meals or finding ideas of what to eat next. They look for simple and affordable recipes they can make while uplifting their mood and energy for the day.</p>
-                        </div>
-                        
-                        <!-- Step 3 -->
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <h4>Wireframing & Prototyping</h4>
-                            <p>Developed mid to high-fidelity wireframes focusing on the look in digital tools like Figma for more refined elements, clearer text/images.</p>
-                            <div style="display: flex; gap: var(--space-md); margin-top: var(--space-sm);">
-                                <span style="padding: 6px 15px; background: var(--pink-dream); color: var(--pink-dark); border-radius: 15px; font-size: var(--font-size-sm);">Low-Fidelity</span>
-                                <span style="padding: 6px 15px; background: var(--purple-dream); color: var(--purple-dark); border-radius: 15px; font-size: var(--font-size-sm);">Mid-Fidelity</span>
-                                <span style="padding: 6px 15px; background: var(--blue-dream); color: var(--blue-dark); border-radius: 15px; font-size: var(--font-size-sm);">High-Fidelity</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Step 4 -->
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <h4>Visual Design System</h4>
-                            <p>Developed a cohesive design system with a soft pastel color palette, dream-inspired icons, and smooth micro-interactions.</p>
-                            
-                            <!-- Color Palette -->
-                            <div class="color-palette">
-                                <div class="color-item" style="background: #667c4e;" data-color="#667C4E"></div>
-                                <div class="color-item" style="background: #f0f0d2;" data-color="#F0F0D2"></div>
-                                <div class="color-item" style="background: #def2e5;" data-color="#DEF2E5"></div>
-                                <div class="color-item" style="background: #b0b453;" data-color="#B0B453"></div>
-                                <div class="color-item" style="background: #fff600;" data-color="#FFF600"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Step 5 -->
-                        <div class="process-step">
-                            <div class="step-number">5</div>
-                            <h4>Testing & Iteration</h4>
-                            <p>Conducted usability tests with participants. Made iterations based on feedback, including simplifying the process and adding functionality.</p>
-                        </div>
+            </div>
+
+            <div class="key-features">
+                <h3 style="color:var(--green-dark); text-align:center; font-size: 25px; margin-bottom:var(--space-lg);">Key Features</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-box"></i></div>
+                        <h4>Pantry Tracking</h4>
+                        <p>Log and monitor ingredients to keep track of groceries and avoid duplicate purchases.</p>
                     </div>
-                </div>
-                
-                <!-- Key Features -->
-                <div class="key-features">
-                    <h3 style="color: var(--purple-dark); font-size: var(--font-size-xl); margin-bottom: var(--space-lg); text-align: center;">Key Features</h3>
-                    
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-moon"></i>
-                            </div>
-                            <h4>Mood Survey</h4>
-                            <p>Surveys user's mood throughout the day to customize meal ideas based on specific moods</p>
-                        </div>
-                        
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-chart-pie"></i>
-                            </div>
-                            <h4>Star Meals</h4>
-                            <p>Generates different meals and suggestions with a starred category of user's favorites</p>
-                        </div>
-                        
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-cloud-moon"></i>
-                            </div>
-                            <h4>Calming Interface</h4>
-                            <p>Gentle colors and gradients for calming use</p>
-                        </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                        <h4>Recipe Recommendations</h4>
+                        <p>Get meal ideas based on available ingredients without needing to search or buy extra items.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                        <h4>Expiration Reminders</h4>
+                        <p>Smart notifications alert users when ingredients are close to expiring.</p>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-    <script>
-        // Hamburger menu functionality only
-        const hamburgerMenu = document.getElementById('hamburgerMenu');
-        const navButtons = document.getElementById('navButtons');
-        const navOverlay = document.getElementById('navOverlay');
-        
-        if (hamburgerMenu && navButtons) {
-            hamburgerMenu.addEventListener('click', (e) => {
-                e.stopPropagation();
-                navButtons.classList.toggle('active');
-                hamburgerMenu.classList.toggle('active');
-                if (navOverlay) {
-                    navOverlay.classList.toggle('active');
-                }
-            });
-            
-            if (navOverlay) {
-                navOverlay.addEventListener('click', () => {
-                    navButtons.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                    navOverlay.classList.remove('active');
-                });
-            }
-            
-            document.addEventListener('click', (e) => {
-                if (navButtons.classList.contains('active') && 
-                    !hamburgerMenu.contains(e.target) && 
-                    !navButtons.contains(e.target)) {
-                    navButtons.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                    if (navOverlay) {
-                        navOverlay.classList.remove('active');
-                    }
-                }
-            });
-            
-            const navLinks = navButtons.querySelectorAll('.nav-btn');
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    navButtons.classList.remove('active');
-                    hamburgerMenu.classList.remove('active');
-                    if (navOverlay) {
-                        navOverlay.classList.remove('active');
-                    }
-                });
-            });
-        }
-        
-        // Create simple twinkling stars
-        const starsBg = document.getElementById('starsBg');
-        if (starsBg) {
-            for (let i = 0; i < 60; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                const sizes = ['star-small', 'star-medium', 'star-large'];
-                star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
-                
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                
-                starsBg.appendChild(star);
-            }
-        }
-    </script>
+        </div>
+
+        <!-- ===== MOOD MEALS PROJECT ===== -->
+        <div class="project-details">
+            <div class="project-header">
+                <div class="project-info">
+                    <span class="project-badge" style="background:var(--gradient-secondary);">Case Study</span>
+                    <h2>Mood Meals</h2>
+                    <p>A mobile application designed to track a user's mood each day, which determines the types of personalized meals they are suggested to have that day.</p>
+                    <div class="project-meta">
+                        <div class="meta-item"><h4>Timeline</h4><p>2 Months</p></div>
+                        <div class="meta-item"><h4>Platform</h4><p>Mobile Phone</p></div>
+                        <div class="meta-item"><h4>Tools</h4><p>Figma</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone-images-container">
+                <div class="phone-item">
+                    <div class="phone-image-wrapper">
+                        <div class="dynamic-island"></div>
+                        <img src="images/screenshot-2025-12-18-at-5-57-17-pm.png" alt="Sign In" class="phone-screen">
+                    </div>
+                    <div class="phone-label">Sign In Screen</div>
+                </div>
+                <div class="phone-item">
+                    <div class="phone-image-wrapper">
+                        <div class="dynamic-island"></div>
+                        <img src="images/screenshot-2025-12-18-at-5-55-34-pm.png" alt="Mood Survey" class="phone-screen">
+                    </div>
+                    <div class="phone-label">Mood Survey Screen</div>
+                </div>
+                <div class="phone-item">
+                    <div class="phone-image-wrapper">
+                        <div class="dynamic-island"></div>
+                        <img src="images/screenshot-2025-12-18-at-5-56-14-pm.png" alt="Starred Meals" class="phone-screen">
+                    </div>
+                    <div class="phone-label">Starred Meals Screen</div>
+                </div>
+            </div>
+
+            <div class="design-process">
+                <h3 style="color:var(--green-dark); font-size: 25px; text-align:center; margin-bottom:var(--space-lg);">My Design Process</h3>
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4>Research & Discovery</h4>
+                        <p>I conducted interviews with 20 potential users to understand their diet habits. Key insights revealed that people wanted simple recipes that they can make easily each day.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4>User Personas & Journey</h4>
+                        <p>Created a primary user persona - a typical college student who struggles with cooking daily meals and looks for simple, affordable recipes that uplift their mood.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4>Wireframing & Prototyping</h4>
+                        <p>Developed mid to high-fidelity wireframes focusing on refined elements and clearer text/images in Figma.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h4>Visual Design System</h4>
+                        <p>Developed a cohesive design system with a soft pastel color palette, dream-inspired icons, and smooth micro-interactions.</p>
+                        <div class="color-palette">
+                            <div class="color-item" style="background:#667c4e;" data-color="#667C4E"></div>
+                            <div class="color-item" style="background:#f0f0d2;" data-color="#F0F0D2"></div>
+                            <div class="color-item" style="background:#def2e5;" data-color="#DEF2E5"></div>
+                            <div class="color-item" style="background:#b0b453;" data-color="#B0B453"></div>
+                            <div class="color-item" style="background:#fff600;" data-color="#FFF600"></div>
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <h4>Testing & Iteration</h4>
+                        <p>Conducted usability tests with participants and made iterations based on feedback.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-features">
+                <h3 style="color:var(--green-dark); text-align:center; font-size: 25px; margin-bottom:var(--space-lg);">Key Features</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-smile"></i></div>
+                        <h4>Mood Survey</h4>
+                        <p>Surveys user's mood throughout the day to customize meal ideas based on specific moods.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-star"></i></div>
+                        <h4>Star Meals</h4>
+                        <p>Generates different meals and suggestions with a starred category of user's favorites.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-cloud"></i></div>
+                        <h4>Calming Interface</h4>
+                        <p>Gentle colors and gradients for calming use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
