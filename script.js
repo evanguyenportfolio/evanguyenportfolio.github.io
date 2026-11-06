@@ -169,11 +169,32 @@ document.addEventListener('DOMContentLoaded', function() {
     const lightboxImage = document.getElementById('workLightboxImage');
     const lightboxCaption = document.getElementById('workLightboxCaption');
     const lightboxClose = document.getElementById('workLightboxClose');
+    const lightboxPrev = document.getElementById('workLightboxPrev');
+    const lightboxNext = document.getElementById('workLightboxNext');
 
-    function openLightbox(src, caption) {
+    let lightboxGallery = [];
+    let lightboxIndex = 0;
+
+    function showLightboxItem(index) {
+        if (!lightboxImage || !lightboxGallery.length) return;
+        lightboxIndex = (index + lightboxGallery.length) % lightboxGallery.length;
+        const item = lightboxGallery[lightboxIndex];
+        lightboxImage.src = item.src;
+        if (lightboxCaption) lightboxCaption.textContent = item.caption || 'Experience Project';
+        const showNav = lightboxGallery.length > 1;
+        if (lightboxPrev) lightboxPrev.style.display = showNav ? 'flex' : 'none';
+        if (lightboxNext) lightboxNext.style.display = showNav ? 'flex' : 'none';
+    }
+
+    function openLightbox(src, caption, gallery, index) {
         if (!lightbox || !lightboxImage) return;
-        lightboxImage.src = src;
-        lightboxCaption.textContent = caption || 'Work Project';
+        if (gallery && gallery.length) {
+            lightboxGallery = gallery;
+            showLightboxItem(index || 0);
+        } else {
+            lightboxGallery = [{ src: src, caption: caption || 'Experience Project' }];
+            showLightboxItem(0);
+        }
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -182,10 +203,21 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!lightbox) return;
         lightbox.classList.remove('active');
         document.body.style.overflow = 'auto';
+        lightboxGallery = [];
     }
 
-    if (lightboxClose) {
-        lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', function(e) {
+            e.stopPropagation();
+            showLightboxItem(lightboxIndex - 1);
+        });
+    }
+    if (lightboxNext) {
+        lightboxNext.addEventListener('click', function(e) {
+            e.stopPropagation();
+            showLightboxItem(lightboxIndex + 1);
+        });
     }
     if (lightbox) {
         lightbox.addEventListener('click', function(e) {
@@ -193,33 +225,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
-            closeLightbox();
-        }
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showLightboxItem(lightboxIndex - 1);
+        if (e.key === 'ArrowRight') showLightboxItem(lightboxIndex + 1);
     });
 
     // Initialize all work slideshows
     document.querySelectorAll('.work-slideshow').forEach((slideshow) => {
-        const slides = slideshow.querySelectorAll('.slide-item');
+        const slideItems = slideshow.querySelectorAll('.slide-item');
         const dots = slideshow.querySelectorAll('.slide-dot');
         const prevBtn = slideshow.querySelector('.prev-btn');
         const nextBtn = slideshow.querySelector('.next-btn');
         const counter = slideshow.querySelector('.current-slide');
         const totalSpan = slideshow.querySelector('.total-slides');
 
-        if (slides.length === 0) return;
+        if (slideItems.length === 0) return;
 
         let currentSlideIndex = 0;
-        const totalSlides = slides.length;
+        const totalSlides = slideItems.length;
 
         if (totalSpan) totalSpan.textContent = totalSlides;
 
         function goToSlide(index) {
-            slides.forEach(s => s.classList.remove('active'));
+            slideItems.forEach(s => s.classList.remove('active'));
             if (index < 0) index = totalSlides - 1;
             if (index >= totalSlides) index = 0;
             currentSlideIndex = index;
-            slides[currentSlideIndex].classList.add('active');
+            slideItems[currentSlideIndex].classList.add('active');
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlideIndex);
             });
@@ -229,17 +262,30 @@ document.addEventListener('DOMContentLoaded', function() {
         function nextSlide() { goToSlide(currentSlideIndex + 1); }
         function prevSlide() { goToSlide(currentSlideIndex - 1); }
 
-        // Click on slide to open lightbox
-        slides.forEach((slide) => {
-            const img = slide.querySelector('img');
+        slideItems.forEach((slide) => {
             slide.addEventListener('click', function(e) {
                 if (e.target.closest('.slide-nav-btn') || e.target.closest('.slide-dot')) {
                     return;
                 }
-                if (img && img.src && !img.src.includes('data:image')) {
-                    openLightbox(img.src, this.dataset.caption || 'Work Project');
+
+                const gallery = [];
+                let clickedIndex = -1;
+
+                slideItems.forEach((s) => {
+                    const img = s.querySelector('img');
+                    if (img && img.src && !img.src.includes('data:image')) {
+                        if (s === this) clickedIndex = gallery.length;
+                        gallery.push({
+                            src: img.src,
+                            caption: s.dataset.caption || 'Experience Project'
+                        });
+                    }
+                });
+
+                if (clickedIndex !== -1 && gallery.length > 0) {
+                    openLightbox(gallery[clickedIndex].src, gallery[clickedIndex].caption, gallery, clickedIndex);
                 } else {
-                    alert('📸 Image placeholder. Replace with your actual work image.');
+                    alert('📸 Image placeholder. Replace with your actual experience image.');
                 }
             });
         });
@@ -566,4 +612,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('Portfolio loaded successfully!');
     console.log('Designed by Eva Nguyen');
-});addEventListener
+});
