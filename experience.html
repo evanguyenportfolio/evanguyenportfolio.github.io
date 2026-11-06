@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eva Nguyen | Work Experience</title>
+    <title>Eva Nguyen | Experience & Resume</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600&family=Dancing+Script:wght@500;600;700&family=Itim&family=Indie+Flower&family=Gaegu:wght@300;400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
@@ -26,9 +26,15 @@
             <button class="work-lightbox-close" id="workLightboxClose">
                 <i class="fas fa-times"></i>
             </button>
-            <img class="work-lightbox-image" id="workLightboxImage" src="" alt="Full size work image" />
+            <button class="work-lightbox-nav prev" id="workLightboxPrev" aria-label="Previous image">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="work-lightbox-nav next" id="workLightboxNext" aria-label="Next image">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <img class="work-lightbox-image" id="workLightboxImage" src="" alt="Full size experience image" />
             <div class="work-lightbox-info">
-                <p id="workLightboxCaption">Work Project</p>
+                <p id="workLightboxCaption">Experience Project</p>
             </div>
         </div>
     </div>
@@ -61,9 +67,14 @@
 
         <!-- ===== WORK: HERO SECTION ===== -->
         <section class="work-hero">
-            <h1 style="color: rgb(225, 118, 149); padding-top: 0px;">My Work Experience</h1>
+            <h1 style="color: rgb(225, 118, 149); padding-top: 0px;">My Experience & Resume</h1>
             <p class="tagline"><i style="font-size: 20px;">Internships • Work Studies • Startups</i></p>
             <p>Explore my professional journey through design, technology, and creative innovation. Each role has shaped my skills and perspective as a designer.</p>
+            <div style="margin-top: var(--space-lg);">
+                <a href="Eva_Nguyen_Resume.pdf" class="btn btn-primary" download>
+                    <i class="fas fa-file-download"></i> Download Resume
+                </a>
+            </div>
         </section>
 
         <!-- ===== WORK: TIMELINE ===== -->
@@ -256,3 +267,4 @@
 
     <script src="script.js"></script>
 </body>
+</html>
